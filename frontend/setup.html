@@ -18,39 +18,61 @@
         <li data-step="seat">④ デフォルト座席</li>
       </ol>
 
-      <div id="step-password" hidden>
+      <!-- ① パスワード変更 -->
+      <div data-panel="password" hidden>
         <h1 class="card__title">パスワードの変更</h1>
         <p class="card__lead">管理者から受け取った初期パスワードを、自分だけのパスワードに変更してください。</p>
 
         <form id="password-form" class="form" novalidate>
           <div class="alert alert--error" data-form-error hidden></div>
-
           <label class="field">
             <span class="field__label">現在のパスワード（初期パスワード）</span>
             <input class="field__input" type="password" name="current_password" autocomplete="current-password" required>
             <span class="field__error" data-error-for="current_password"></span>
           </label>
-
           <label class="field">
             <span class="field__label">新しいパスワード</span>
             <input class="field__input" type="password" name="new_password" autocomplete="new-password" minlength="8" maxlength="128" required>
             <span class="field__hint">8文字以上</span>
             <span class="field__error" data-error-for="new_password"></span>
           </label>
-
           <label class="field">
             <span class="field__label">新しいパスワード（確認）</span>
             <input class="field__input" type="password" name="new_password_confirm" autocomplete="new-password" required>
             <span class="field__error" data-error-for="new_password_confirm"></span>
           </label>
-
           <button type="submit" class="button button--block">変更して次へ</button>
         </form>
       </div>
 
-      <div id="step-profile" hidden>
+      <!-- ② プロフィール -->
+      <div data-panel="profile" hidden>
         <h1 class="card__title">プロフィールの登録</h1>
-        <p class="card__lead">この画面は次の機能（プロフィール）で実装します。</p>
+        <p class="card__lead">同じオフィスのメンバーに表示されます。</p>
+        <form id="profile-form" class="form" novalidate>
+          <div class="alert alert--error" data-form-error hidden></div>
+          <div data-fields class="form"></div>
+          <button type="submit" class="button button--block">登録して次へ</button>
+        </form>
+      </div>
+
+      <!-- ③ 技術スキル -->
+      <div data-panel="skills" hidden>
+        <h1 class="card__title">技術スキルの登録</h1>
+        <p class="card__lead">使ったことのある技術と経験年数を登録してください。あとからマイプロフィールで変更できます。</p>
+        <form id="skills-form" class="form" novalidate>
+          <div class="alert alert--error" data-form-error hidden></div>
+          <div data-skills></div>
+          <button type="submit" class="button button--block">登録して次へ</button>
+        </form>
+      </div>
+
+      <!-- ④ デフォルト座席 -->
+      <div data-panel="seat" hidden>
+        <h1 class="card__title">デフォルト座席</h1>
+        <p class="card__lead">よく座る座席を設定しておくと、出社するときに最初から選ばれた状態になります。</p>
+        <p class="notice">オフィスマップの準備ができたら、マイプロフィールから設定できます。</p>
+        <a class="button button--block" href="/map.html">はじめる</a>
       </div>
     </section>
   </main>

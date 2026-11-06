@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイプロフィール | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body data-role="general">
+  <header id="app-header"></header>
+  <main class="page page--narrow">
+    <h1 class="page__title">マイプロフィール</h1>
+
+    <section class="panel">
+      <h2 class="panel__title">プロフィール</h2>
+      <form id="profile-form" class="form" novalidate>
+        <div class="alert alert--error" data-form-error hidden></div>
+        <div data-fields class="form"></div>
+        <div class="field">
+          <span class="field__label">デフォルト座席</span>
+          <span class="field__hint" id="default-seat">未設定（オフィスマップの準備ができたら設定できます）</span>
+        </div>
+        <div class="panel__actions">
+          <button type="submit" class="button">保存する</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" id="skills-panel" hidden>
+      <h2 class="panel__title">技術スキル</h2>
+      <form id="skills-form" class="form" novalidate>
+        <div class="alert alert--error" data-form-error hidden></div>
+        <div data-skills></div>
+        <div class="panel__actions">
+          <button type="submit" class="button">保存する</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel__title">パスワードの変更</h2>
+      <form id="password-form" class="form" novalidate>
+        <div class="alert alert--error" data-form-error hidden></div>
+        <label class="field">
+          <span class="field__label">現在のパスワード</span>
+          <input class="field__input" type="password" name="current_password" autocomplete="current-password" required>
+          <span class="field__error" data-error-for="current_password"></span>
+        </label>
+        <div class="field-row">
+          <label class="field">
+            <span class="field__label">新しいパスワード</span>
+            <input class="field__input" type="password" name="new_password" autocomplete="new-password" minlength="8" maxlength="128" required>
+            <span class="field__error" data-error-for="new_password"></span>
+          </label>
+          <label class="field">
+            <span class="field__label">新しいパスワード（確認）</span>
+            <input class="field__input" type="password" name="new_password_confirm" autocomplete="new-password" required>
+            <span class="field__error" data-error-for="new_password_confirm"></span>
+          </label>
+        </div>
+        <div class="panel__actions">
+          <button type="submit" class="button">変更する</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/profile.js"></script>
+</body>
+</html>

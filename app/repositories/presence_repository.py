@@ -1,5 +1,7 @@
 import sqlite3
 
+from app.entities.profile import Presence
+
 
 class PresenceRepository:
     def __init__(self, conn: sqlite3.Connection) -> None:
@@ -12,3 +14,13 @@ class PresenceRepository:
             " VALUES (?, ?, 'not_working', ?)",
             (user_id, organization_id, now),
         )
+
+    def get(self, user_id: int, organization_id: int) -> Presence | None:
+        row = self.conn.execute(
+            "SELECT status, seat_id, comment FROM presence"
+            " WHERE user_id = ? AND organization_id = ?",
+            (user_id, organization_id),
+        ).fetchone()
+        if row is None:
+            return None
+        return Presence(status=row["status"], seat_id=row["seat_id"], comment=row["comment"])

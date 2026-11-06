@@ -19,6 +19,11 @@
   box-sizing: border-box;
 }
 
+/* hidden 属性を付けた要素は、display を指定したクラスがあっても必ず隠す */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   min-width: 1280px;

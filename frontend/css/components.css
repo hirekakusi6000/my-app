@@ -12,6 +12,7 @@
   cursor: pointer;
   background: var(--color-primary);
   color: #fff;
+  text-decoration: none;
 }
 
 .button:hover {
@@ -388,4 +389,217 @@ a {
 
 .toast--error {
   background: var(--color-danger);
+}
+
+/* ───────── 初回設定のステップ ───────── */
+.steps li[data-done] {
+  color: var(--color-present);
+}
+
+.notice {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  background: #ddf4ff;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+/* ───────── パネル（ページ内の区切り） ───────── */
+.page--narrow {
+  max-width: 760px;
+}
+
+.panel {
+  margin-top: 20px;
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.panel__title {
+  margin: 0 0 16px;
+  font-size: 1.125rem;
+}
+
+.panel__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* ───────── アバター ───────── */
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eaeef2;
+  flex: none;
+}
+
+.avatar--lg {
+  width: 88px;
+  height: 88px;
+}
+
+.avatar--placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}
+
+.avatar-field {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.avatar-field .button {
+  justify-self: start;
+}
+
+/* ───────── 技術スキルの入力 ───────── */
+.skills-editor {
+  display: grid;
+  gap: 12px;
+}
+
+.skills-editor__group {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.skills-editor__group legend {
+  padding: 0 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.skills-editor__group > .button {
+  justify-self: start;
+}
+
+.skills-editor__rows {
+  display: grid;
+  gap: 6px;
+}
+
+.skills-editor__rows:empty {
+  display: none;
+}
+
+.skills-editor__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.skills-editor__row .field__input:first-child {
+  flex: 1;
+}
+
+.skills-editor__years {
+  width: 72px;
+}
+
+/* ───────── タブ ───────── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tabs__tab {
+  padding: 8px 16px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font: inherit;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.tabs__tab[aria-selected="true"] {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.tabs + .panel {
+  margin-top: 0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+
+/* ───────── 候補の一覧 ───────── */
+.inline-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inline-form input[type="text"] {
+  flex: 1;
+}
+
+.inline-form + .alert {
+  margin-top: 8px;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 0.875rem;
+}
+
+.item-list {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.item-list__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.item-list__name {
+  flex: 1;
+}
+
+.item-list__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.item-list__empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--color-muted);
 }

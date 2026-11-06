@@ -2,7 +2,7 @@ import sqlite3
 
 from fastapi import APIRouter, Depends, status
 
-from app.api.deps import require_master
+from app.api.deps import get_avatar_storage, require_master
 from app.db.connection import get_db
 from app.entities.user import Role, User, UserSummary
 from app.schemas.users import (
@@ -12,13 +12,17 @@ from app.schemas.users import (
     UserListResponse,
     UserResponse,
 )
+from app.services.avatar_storage import AvatarStorage
 from app.services.user_service import MAX_GENERAL_USERS, UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-def get_user_service(conn: sqlite3.Connection = Depends(get_db)) -> UserService:
-    return UserService(conn)
+def get_user_service(
+    conn: sqlite3.Connection = Depends(get_db),
+    storage: AvatarStorage = Depends(get_avatar_storage),
+) -> UserService:
+    return UserService(conn, storage)
 
 
 def _from_summary(s: UserSummary) -> UserResponse:
