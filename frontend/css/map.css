@@ -385,3 +385,102 @@ kbd {
 .legend__dot--remote {
   background: var(--color-remote);
 }
+
+/* ───────── 座席の選択中に表示するバー ───────── */
+.pick-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #ddf4ff;
+  border-bottom: 1px solid #54aeff;
+}
+
+.pick-bar__text {
+  flex: 1;
+  font-weight: 600;
+}
+
+/* 選択中は椅子の上のラベルより座席を優先して目立たせる */
+.room-map--pickable .furniture--taken {
+  cursor: not-allowed;
+}
+
+/* ───────── 右側のパネル ───────── */
+.side-section + .side-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.my-status__current {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  margin-bottom: 12px;
+}
+
+.my-status__seat {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.my-status__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.my-status__comment .button {
+  white-space: nowrap;
+}
+
+.count {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.people-list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people-list__person {
+  display: grid;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  border-radius: var(--radius);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.people-list__person:hover {
+  background: #f6f8fa;
+}
+
+.people-list__name::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--color-remote);
+}
+
+.people-list__comment {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.people-list__empty {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}

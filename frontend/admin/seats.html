@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>座席の管理 | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <header id="app-header"></header>
+  <main class="page">
+    <div class="page__head">
+      <div>
+        <h1 class="page__title">座席の管理</h1>
+        <p class="page__lead">使用中の座席の一覧です。日付が変わっても状態はリセットされないため、退勤し忘れた人の座席はここで空けられます。</p>
+      </div>
+      <button type="button" class="button button--ghost" id="reload">最新の状態にする</button>
+    </div>
+
+    <div class="summary" id="summary"></div>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>名前</th>
+            <th>状態</th>
+            <th>座席</th>
+            <th>ひとことコメント</th>
+            <th>最終更新</th>
+            <th class="table__actions">操作</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="6" class="table__empty">読み込み中...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script type="module" src="/js/pages/admin-seats.js"></script>
+</body>
+</html>

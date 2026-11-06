@@ -23,6 +23,8 @@ function ensureDialog() {
     <p class="profile-popup__comment" data-comment></p>
     <div data-skills></div>
     <div class="dialog__actions">
+      <span data-extra-actions></span>
+      <span class="editor__spacer"></span>
       <button type="button" class="button button--ghost" data-close>閉じる</button>
     </div>
   `;
@@ -39,13 +41,35 @@ function text(sel, value) {
   dialog.querySelector(sel).textContent = value;
 }
 
-/** @param {number} userId */
-export async function openProfilePopup(userId) {
+/**
+ * @param {number} userId
+ * @param {{ actions?: { label: string, danger?: boolean, onClick: () => Promise<boolean> }[] }} options
+ *   actions: ポップアップに追加するボタン。onClick が true を返すとポップアップを閉じる
+ */
+export async function openProfilePopup(userId, { actions = [] } = {}) {
   const d = ensureDialog();
   text("[data-name]", "読み込み中...");
   text("[data-meta]", "");
   text("[data-comment]", "");
   d.querySelector("[data-skills]").replaceChildren();
+
+  const extra = d.querySelector("[data-extra-actions]");
+  extra.replaceChildren();
+  for (const action of actions) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `button button--ghost${action.danger ? " button--danger-text" : ""}`;
+    b.textContent = action.label;
+    b.addEventListener("click", async () => {
+      b.disabled = true;
+      try {
+        if (await action.onClick()) d.close();
+      } finally {
+        b.disabled = false;
+      }
+    });
+    extra.append(b);
+  }
   d.showModal();
 
   let p;
