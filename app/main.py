@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from app.api.v1.router import api_router
 from app.core.config import Settings, get_settings
 from app.core.errors import register_exception_handlers
+from app.core.rate_limit import RateLimiter
 from app.db import migrate
 
 
@@ -22,6 +23,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="オフィス座席・従業員管理システム", lifespan=lifespan)
     app.state.settings = settings
+    app.state.rate_limiter = RateLimiter()
 
     register_exception_handlers(app)
     # API を先に登録し、残りのパスを画面ファイルの配信に回す

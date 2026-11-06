@@ -7,21 +7,12 @@
   <link rel="stylesheet" href="/css/base.css">
 </head>
 <body>
-  <main class="placeholder">
-    <h1>オフィス座席・従業員管理</h1>
-    <p>開発環境の構築が完了しました。</p>
-    <p>サーバーの状態：<span id="health">確認中...</span></p>
-  </main>
   <script type="module">
-    import { api } from "/js/api/client.js";
+    // トップページは、ログイン状態に応じて適切な画面へ振り分けるだけ
+    import { homePathFor, loadMe, PATHS } from "/js/lib/auth-guard.js";
 
-    const el = document.getElementById("health");
-    try {
-      const data = await api.get("/health");
-      el.textContent = `API ${data.status} / DB ${data.database}`;
-    } catch (err) {
-      el.textContent = `エラー: ${err.message}`;
-    }
+    const me = await loadMe();
+    window.location.replace(me ? homePathFor(me) : PATHS.login);
   </script>
 </body>
 </html>
