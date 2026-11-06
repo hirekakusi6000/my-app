@@ -6,9 +6,13 @@ import { PATHS } from "../lib/auth-guard.js";
 const NAV = {
   master: [
     { href: "/admin/users.html", label: "ユーザー管理" },
+    { href: "/admin/master-data.html", label: "候補の管理" },
     { href: "/map.html", label: "マップ" },
   ],
-  general: [{ href: "/map.html", label: "マップ" }],
+  general: [
+    { href: "/map.html", label: "マップ" },
+    { href: "/profile.html", label: "プロフィール" },
+  ],
 };
 
 /**

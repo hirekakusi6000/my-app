@@ -8,6 +8,10 @@ const FIELD_LABELS = {
   new_password: "パスワードは8〜128文字で入力してください",
   initial_password: "パスワードは8〜128文字で入力してください",
   organization_name: "組織名は1〜100文字で入力してください",
+  name: "1〜50文字で入力してください",
+  birth_date: "生年月日を入力してください",
+  position_name: "50文字以内で入力してください",
+  job_type_name: "50文字以内で入力してください",
 };
 
 export function clearErrors(form) {

@@ -9,6 +9,7 @@ from app.entities.user import Organization, Role, User
 from app.repositories.organization_repository import OrganizationRepository
 from app.repositories.session_repository import SessionRepository
 from app.repositories.user_repository import UserRepository
+from app.services.master_data_service import MasterDataService
 
 
 @dataclass(frozen=True)
@@ -53,6 +54,7 @@ class AuthService:
                     must_change_password=False,
                     now=now,
                 )
+                MasterDataService(self.conn).seed_defaults(org.id)
                 token = self._create_session(user.id)
         except sqlite3.IntegrityError as exc:
             # 同時に同じメールアドレスで登録された場合

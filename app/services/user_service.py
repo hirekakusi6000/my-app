@@ -11,18 +11,22 @@ from app.core.errors import BusinessRuleError, ConflictError, NotFoundError
 from app.core.time import to_iso, utc_now
 from app.entities.user import Role, User, UserSummary
 from app.repositories.presence_repository import PresenceRepository
+from app.repositories.profile_repository import ProfileRepository
 from app.repositories.session_repository import SessionRepository
 from app.repositories.user_repository import UserRepository
+from app.services.avatar_storage import AvatarStorage
 
 MAX_GENERAL_USERS = 50
 
 
 class UserService:
-    def __init__(self, conn: sqlite3.Connection) -> None:
+    def __init__(self, conn: sqlite3.Connection, avatar_storage: AvatarStorage) -> None:
         self.conn = conn
+        self.storage = avatar_storage
         self.users = UserRepository(conn)
         self.sessions = SessionRepository(conn)
         self.presence = PresenceRepository(conn)
+        self.profiles = ProfileRepository(conn)
 
     def list_users(self, master: User) -> list[UserSummary]:
         return self.users.list_summaries(master.organization_id)
@@ -89,8 +93,12 @@ class UserService:
     def delete_user(self, master: User, user_id: int) -> None:
         """物理削除。座っていた座席は、在席状態の行が一緒に消えることで空く。"""
         target = self._get_general_user(master, user_id)
+        profile = self.profiles.get(target.id, master.organization_id)
         with self.conn:
             self.users.delete(user_id=target.id, organization_id=master.organization_id)
+        # DB から消えたことが確定してから、プロフィール画像のファイルを消す
+        if profile is not None:
+            self.storage.delete(profile.avatar_path)
 
     def _get_general_user(self, master: User, user_id: int) -> User:
         if user_id == master.id:

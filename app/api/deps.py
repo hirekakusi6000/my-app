@@ -3,6 +3,7 @@
 権限のチェックは次の順に積み重なっている:
   get_current_user          … ログインしているか
   require_password_changed  … 初期パスワードを変更済みか
+  require_active_user       … 一般ユーザーならプロフィールも登録済みか
   require_master / require_general … 権限
 """
 
@@ -15,7 +16,9 @@ from app.core.errors import ForbiddenError, UnauthenticatedError
 from app.core.rate_limit import RateLimiter
 from app.db.connection import get_db
 from app.entities.user import Role, User
+from app.repositories.user_repository import UserRepository
 from app.services.auth_service import AuthService
+from app.services.avatar_storage import AvatarStorage
 
 SESSION_COOKIE = "session"
 
@@ -56,6 +59,20 @@ def require_password_changed(user: User = Depends(get_current_user)) -> User:
     if user.must_change_password:
         raise ForbiddenError("パスワードを変更してください", code="PASSWORD_CHANGE_REQUIRED")
     return user
+
+
+def require_active_user(
+    user: User = Depends(require_password_changed),
+    conn: sqlite3.Connection = Depends(get_db),
+) -> User:
+    """初回設定（パスワード変更・プロフィール登録）が終わったユーザー。マスターはそのまま通す。"""
+    if user.role is Role.GENERAL and not UserRepository(conn).has_profile(user.id):
+        raise ForbiddenError("プロフィールを登録してください", code="SETUP_REQUIRED")
+    return user
+
+
+def get_avatar_storage(settings: Settings = Depends(get_settings_from_app)) -> AvatarStorage:
+    return AvatarStorage(settings.upload_dir)
 
 
 def require_master(user: User = Depends(require_password_changed)) -> User:

@@ -54,6 +54,25 @@ def signup(client: TestClient, email: str = "master@example.com", org: str = "�
     return res.json()
 
 
+ACTIVE_PASSWORD = "general-pass-123"
+
+
+def login_general(master_client: TestClient, email: str = "taro@example.com") -> TestClient:
+    """マスターの API で一般ユーザーを作成し、パスワード変更まで済ませたクライアントを返す。"""
+    res = master_client.post(
+        "/api/v1/users", json={"email": email, "initial_password": GENERAL_PASSWORD}
+    )
+    assert res.status_code == 201, res.text
+    general = TestClient(master_client.app)
+    general.post("/api/v1/auth/login", json={"email": email, "password": GENERAL_PASSWORD})
+    res = general.put(
+        "/api/v1/me/password",
+        json={"current_password": GENERAL_PASSWORD, "new_password": ACTIVE_PASSWORD},
+    )
+    assert res.status_code == 204, res.text
+    return general
+
+
 def create_general_user(
     settings: Settings, organization_id: int, email: str = "general@example.com"
 ) -> int:

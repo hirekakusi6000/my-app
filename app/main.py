@@ -11,6 +11,18 @@ from app.core.rate_limit import RateLimiter
 from app.db import migrate
 
 
+class FrontendFiles(StaticFiles):
+    """画面ファイルの配信。更新したファイルが確実に反映されるよう、毎回ブラウザに確認させる。
+
+    no-cache は「使う前にサーバーへ確認する」という意味で、変更がなければ 304 が返るので軽い。
+    """
+
+    def file_response(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+        response = super().file_response(*args, **kwargs)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
 
@@ -28,7 +40,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     register_exception_handlers(app)
     # API を先に登録し、残りのパスを画面ファイルの配信に回す
     app.include_router(api_router)
-    app.mount("/", StaticFiles(directory=settings.frontend_dir, html=True), name="frontend")
+    app.mount("/", FrontendFiles(directory=settings.frontend_dir, html=True), name="frontend")
     return app
 
 
