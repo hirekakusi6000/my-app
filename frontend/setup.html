@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初回設定 | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <header id="app-header"></header>
+  <main class="auth-page">
+    <section class="card card--wide">
+      <ol class="steps">
+        <li data-step="password">① パスワード変更</li>
+        <li data-step="profile">② プロフィール</li>
+        <li data-step="skills">③ 技術スキル</li>
+        <li data-step="seat">④ デフォルト座席</li>
+      </ol>
+
+      <div id="step-password" hidden>
+        <h1 class="card__title">パスワードの変更</h1>
+        <p class="card__lead">管理者から受け取った初期パスワードを、自分だけのパスワードに変更してください。</p>
+
+        <form id="password-form" class="form" novalidate>
+          <div class="alert alert--error" data-form-error hidden></div>
+
+          <label class="field">
+            <span class="field__label">現在のパスワード（初期パスワード）</span>
+            <input class="field__input" type="password" name="current_password" autocomplete="current-password" required>
+            <span class="field__error" data-error-for="current_password"></span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">新しいパスワード</span>
+            <input class="field__input" type="password" name="new_password" autocomplete="new-password" minlength="8" maxlength="128" required>
+            <span class="field__hint">8文字以上</span>
+            <span class="field__error" data-error-for="new_password"></span>
+          </label>
+
+          <label class="field">
+            <span class="field__label">新しいパスワード（確認）</span>
+            <input class="field__input" type="password" name="new_password_confirm" autocomplete="new-password" required>
+            <span class="field__error" data-error-for="new_password_confirm"></span>
+          </label>
+
+          <button type="submit" class="button button--block">変更して次へ</button>
+        </form>
+      </div>
+
+      <div id="step-profile" hidden>
+        <h1 class="card__title">プロフィールの登録</h1>
+        <p class="card__lead">この画面は次の機能（プロフィール）で実装します。</p>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/setup.js"></script>
+</body>
+</html>

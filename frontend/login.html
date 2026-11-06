@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <main class="auth-page">
+    <section class="card">
+      <h1 class="card__title">ログイン</h1>
+      <p class="card__lead">オフィス座席・従業員管理</p>
+
+      <form id="login-form" class="form" novalidate>
+        <div class="alert alert--error" data-form-error hidden></div>
+
+        <label class="field">
+          <span class="field__label">メールアドレス</span>
+          <input class="field__input" type="email" name="email" autocomplete="username" required>
+          <span class="field__error" data-error-for="email"></span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">パスワード</span>
+          <input class="field__input" type="password" name="password" autocomplete="current-password" required>
+          <span class="field__error" data-error-for="password"></span>
+        </label>
+
+        <button type="submit" class="button button--block">ログイン</button>
+      </form>
+
+      <p class="card__footer">
+        はじめて使う管理者の方は <a href="/signup.html">新規登録</a>
+      </p>
+    </section>
+  </main>
+  <script type="module" src="/js/pages/login.js"></script>
+</body>
+</html>

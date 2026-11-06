@@ -1,0 +1,195 @@
+/* ───────── ボタン ───────── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.button:hover {
+  filter: brightness(1.08);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.button--block {
+  width: 100%;
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+  font-weight: 400;
+}
+
+/* ───────── フォーム ───────── */
+.form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 4px;
+}
+
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field__hint {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.field__input {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font: inherit;
+  background: var(--color-surface);
+}
+
+.field__input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+.field__error {
+  min-height: 1em;
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+}
+
+.alert {
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+.alert--error {
+  background: #ffebe9;
+  border: 1px solid #ffcecb;
+  color: var(--color-danger);
+}
+
+/* ───────── 認証画面（ログイン・新規登録） ───────── */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.card--wide {
+  max-width: 560px;
+}
+
+.card__title {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.card__lead {
+  margin: 0 0 24px;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.card__footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+/* ───────── 共通ヘッダー ───────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 56px;
+  padding: 0 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header__brand {
+  font-weight: 700;
+}
+
+.app-header__nav {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.app-header__nav a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.app-header__nav a[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.app-header__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.875rem;
+}
+
+/* ───────── ページ本体 ───────── */
+.page {
+  max-width: 1080px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.steps {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.steps li[aria-current="step"] {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.steps li + li::before {
+  content: "→";
+  margin-right: 8px;
+  color: var(--color-border);
+}
