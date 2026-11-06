@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>組織の設定 | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <header id="app-header"></header>
+  <main class="page page--narrow">
+    <h1 class="page__title">組織の設定</h1>
+
+    <section class="panel">
+      <h2 class="panel__title">組織名</h2>
+      <form id="rename-form" class="form" novalidate>
+        <div class="alert alert--error" data-form-error hidden></div>
+        <label class="field">
+          <span class="field__label">組織名</span>
+          <input class="field__input" type="text" name="name" maxlength="100" required>
+          <span class="field__error" data-error-for="name"></span>
+        </label>
+        <p class="field__hint" id="created-at"></p>
+        <div class="panel__actions">
+          <button type="submit" class="button">保存する</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel panel--danger">
+      <h2 class="panel__title">組織の削除</h2>
+      <p class="dialog__text">
+        組織と、そこに含まれる<strong>すべてのデータ</strong>（従業員のアカウント・プロフィール・画像・スキル・在席状態・フロア・部屋・マップ・候補の一覧）を完全に削除します。
+        <strong>元に戻すことはできません。</strong>
+      </p>
+      <div class="panel__actions">
+        <button type="button" class="button button--danger" id="open-delete">組織を削除する</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="dialog" id="delete-dialog">
+    <form class="form" id="delete-form" novalidate>
+      <h2 class="dialog__title">組織を完全に削除する</h2>
+      <p class="dialog__text">確認のため、組織名「<strong data-org-name></strong>」とあなたのパスワードを入力してください。</p>
+      <div class="alert alert--error" data-form-error hidden></div>
+      <label class="field">
+        <span class="field__label">組織名</span>
+        <input class="field__input" type="text" name="confirm_name" autocomplete="off" required>
+        <span class="field__error" data-error-for="confirm_name"></span>
+      </label>
+      <label class="field">
+        <span class="field__label">パスワード</span>
+        <input class="field__input" type="password" name="password" autocomplete="current-password" required>
+        <span class="field__error" data-error-for="password"></span>
+      </label>
+      <div class="dialog__actions">
+        <button type="button" class="button button--ghost" data-close>キャンセル</button>
+        <button type="submit" class="button button--danger" data-submit disabled>完全に削除する</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/js/pages/admin-organization.js"></script>
+</body>
+</html>

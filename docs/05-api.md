@@ -68,6 +68,13 @@
 | GET | `/presence` | 全員 | 組織全員の状態の一覧 |
 | DELETE | `/seats/{seat_id}/occupant` | マスター | 座席を強制的に空ける |
 
+## 組織の設定（マスター）
+| メソッド | パス | 内容 |
+|---|---|---|
+| GET | `/organization` | 自分の組織 |
+| PATCH | `/organization` | 組織名の変更 |
+| DELETE | `/organization` | 組織とすべてのデータを完全に削除。`{password, confirm_name}` で本人確認（違えば 422 `INVALID_PASSWORD` / `NAME_MISMATCH`） |
+
 ## 動作確認用
 | メソッド | パス | 内容 |
 |---|---|---|

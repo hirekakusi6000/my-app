@@ -763,3 +763,16 @@ a {
   border: 1px solid var(--color-border);
   border-radius: 8px;
 }
+
+/* ───────── 取り消せない操作をまとめたパネル ───────── */
+.panel--danger {
+  border-color: #ffcecb;
+}
+
+.panel--danger .panel__title {
+  color: var(--color-danger);
+}
+
+.panel--danger .dialog__text {
+  margin-bottom: 16px;
+}

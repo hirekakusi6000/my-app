@@ -6,6 +6,7 @@ from app.api.v1.endpoints import (
     master_data,
     me,
     offices,
+    organization,
     presence,
     profiles,
     users,
@@ -20,3 +21,4 @@ api_router.include_router(master_data.router)
 api_router.include_router(profiles.router)
 api_router.include_router(offices.router)
 api_router.include_router(presence.router)
+api_router.include_router(organization.router)
