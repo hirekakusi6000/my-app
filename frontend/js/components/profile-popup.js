@@ -2,7 +2,6 @@
 
 import { SKILL_CATEGORIES } from "../api/master-data.js";
 import { profileApi } from "../api/profile.js";
-import { troublesApi } from "../api/troubles.js";
 import { STATUS_LABELS } from "./map-renderer.js";
 
 let dialog;
@@ -23,10 +22,6 @@ function ensureDialog() {
     </div>
     <p class="profile-popup__comment" data-comment></p>
     <div data-skills></div>
-    <div class="profile-popup__troubles" data-troubles hidden>
-      <h3 class="profile-popup__section-title">困っていること</h3>
-      <ul data-trouble-list></ul>
-    </div>
     <div class="dialog__actions">
       <span data-extra-actions></span>
       <span class="editor__spacer"></span>
@@ -77,14 +72,9 @@ export async function openProfilePopup(userId, { actions = [] } = {}) {
   }
   d.showModal();
 
-  d.querySelector("[data-troubles]").hidden = true;
   let p;
-  let troubles = [];
   try {
-    [p, troubles] = await Promise.all([
-      profileApi.get(userId),
-      troublesApi.list({ status: "open", userId }).catch(() => []),
-    ]);
+    p = await profileApi.get(userId);
   } catch (err) {
     text("[data-name]", "プロフィールを表示できません");
     text("[data-meta]", err.message);
@@ -113,19 +103,6 @@ export async function openProfilePopup(userId, { actions = [] } = {}) {
   const commentEl = d.querySelector("[data-comment]");
   commentEl.hidden = !comment;
   commentEl.textContent = comment ? `💬 ${comment}` : "";
-
-  const troubleList = d.querySelector("[data-trouble-list]");
-  troubleList.replaceChildren(
-    ...troubles.map((t) => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = "/troubles.html";
-      a.textContent = t.title;
-      li.append(a);
-      return li;
-    }),
-  );
-  d.querySelector("[data-troubles]").hidden = troubles.length === 0;
 
   const skillsEl = d.querySelector("[data-skills]");
   if (p.is_engineer && p.skills.length) {

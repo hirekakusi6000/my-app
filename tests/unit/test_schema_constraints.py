@@ -85,15 +85,15 @@ def test_deleting_user_removes_related_rows(db):
     user_id = _user(db, org_id, "a@example.com")
     _presence(db, user_id, org_id, "present", seat_id)
     db.execute(
-        "INSERT INTO troubles (organization_id, user_id, title, created_at, updated_at)"
-        " VALUES (?, ?, 'PCが重い', ?, ?)",
-        (org_id, user_id, NOW, NOW),
+        "INSERT INTO profiles (user_id, name, birth_date, updated_at)"
+        " VALUES (?, '山田太郎', '1990-04-01', ?)",
+        (user_id, NOW),
     )
 
     db.execute("DELETE FROM users WHERE id = ?", (user_id,))
 
     assert db.execute("SELECT COUNT(*) FROM presence").fetchone()[0] == 0
-    assert db.execute("SELECT COUNT(*) FROM troubles").fetchone()[0] == 0
+    assert db.execute("SELECT COUNT(*) FROM profiles").fetchone()[0] == 0
     # 座席が空いたので、家具自体は削除できる
     db.execute("DELETE FROM furniture WHERE id = ?", (seat_id,))
 

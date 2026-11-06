@@ -1,14 +1,18 @@
 # 04. DB設計
 
-実際の定義は [migrations/0001_init.sql](../migrations/0001_init.sql)。
+実際の定義は [migrations/](../migrations/)（`0001_init.sql` から番号順に適用）。
+
+| マイグレーション | 内容 |
+|---|---|
+| `0001_init.sql` | 初期スキーマ |
+| `0002_drop_troubles.sql` | 困りごと機能の削除に伴い `troubles` テーブルを削除 |
 
 ## テーブルの関係
 ```
 organizations ─┬─< users ─┬─< sessions
                │          ├── profiles (1:1) ── default_seat_id → furniture
                │          ├─< user_skills >── skills
-               │          ├── presence (1:1) ── seat_id → furniture
-               │          └─< troubles
+               │          └── presence (1:1) ── seat_id → furniture
                ├─< positions / job_types / skills   … 候補の一覧
                └─< floors ─< rooms ─< furniture
 ```
@@ -28,11 +32,10 @@ organizations ─┬─< users ─┬─< sessions
 | rooms | id, organization_id, floor_id, name, width, height, sort_order | 1フロアあたり最大5。大きさはグリッドの単位 |
 | furniture | id, organization_id, room_id, type, label, x, y, width, height, rotation | `chair` が座席。rotation は 0/90/180/270 |
 | presence | user_id (PK), organization_id, status, seat_id, comment, updated_at | seat_id は UNIQUE。`present`/`away` のときだけ座席あり（CHECK 制約） |
-| troubles | id, organization_id, user_id, title, body, status, created_at, updated_at | status は `open` / `resolved` |
 
 ## 共通のルール
 - **組織の分離**：組織のデータを持つテーブルには `organization_id` を持たせ、repository の SQL で必ず条件に入れる。
-- **削除**：ユーザーを削除すると、セッション・プロフィール・スキル・在席状態・困りごとが CASCADE で削除される。
+- **削除**：ユーザーを削除すると、セッション・プロフィール・スキル・在席状態が CASCADE で削除される。
 - **座席の削除**：`presence.seat_id` は削除の連鎖をしない（NO ACTION）。座っている人がいる家具・部屋・フロアを削除するときは、先に service がその人を未出勤に戻す。DB の制約は最後の安全装置として働く。
 - **日時**：UTC の ISO 8601 文字列。生年月日は `YYYY-MM-DD`。
 - **真偽値**：INTEGER の 0/1（CHECK 制約付き）。

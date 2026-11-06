@@ -84,4 +84,3 @@ class OccupantResponse(BaseModel):
     name: str | None
     status: str
     avatar_url: str | None
-    has_open_trouble: bool = False

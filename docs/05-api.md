@@ -68,14 +68,6 @@
 | GET | `/presence` | 全員 | 組織全員の状態の一覧 |
 | DELETE | `/seats/{seat_id}/occupant` | マスター | 座席を強制的に空ける |
 
-## 困りごと
-| メソッド | パス | 権限 |
-|---|---|---|
-| GET | `/troubles?status=` | 全員 |
-| POST | `/troubles` | 一般 |
-| PATCH | `/troubles/{id}` | 登録した本人 |
-| DELETE | `/troubles/{id}` | 本人・マスター |
-
 ## 動作確認用
 | メソッド | パス | 内容 |
 |---|---|---|

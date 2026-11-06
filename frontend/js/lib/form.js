@@ -12,8 +12,6 @@ const FIELD_LABELS = {
   birth_date: "生年月日を入力してください",
   position_name: "50文字以内で入力してください",
   job_type_name: "50文字以内で入力してください",
-  title: "タイトルは1〜100文字で入力してください",
-  body: "2000文字以内で入力してください",
 };
 
 export function clearErrors(form) {
