@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マップ編集 | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/map.css">
+</head>
+<body>
+  <header id="app-header"></header>
+  <main class="editor">
+    <aside class="editor__palette">
+      <h2 class="editor__heading">部品</h2>
+      <p class="field__hint">クリックで部屋に追加します。</p>
+      <div class="editor__palette-items" id="palette"></div>
+      <h2 class="editor__heading">操作</h2>
+      <ul class="editor__help">
+        <li>ドラッグで移動</li>
+        <li>右下の □ をドラッグで大きさ変更</li>
+        <li>矢印キーで1マス移動</li>
+        <li><kbd>R</kbd> で回転、<kbd>Delete</kbd> で削除</li>
+      </ul>
+    </aside>
+
+    <section class="editor__canvas">
+      <div class="editor__toolbar">
+        <select class="field__input" id="room-select" aria-label="編集する部屋"></select>
+        <span class="editor__status" id="status"></span>
+        <span class="editor__spacer"></span>
+        <button type="button" class="button button--ghost" id="revert">元に戻す</button>
+        <button type="button" class="button" id="save">保存する</button>
+      </div>
+      <div class="editor__stage" id="stage"></div>
+    </section>
+
+    <aside class="editor__props" id="props">
+      <h2 class="editor__heading">選択中の家具</h2>
+      <p class="field__hint" data-empty>家具をクリックすると、ここで細かく調整できます。</p>
+      <form class="form" data-form hidden novalidate>
+        <div class="editor__type" data-type></div>
+        <label class="field">
+          <span class="field__label">ラベル</span>
+          <input class="field__input" type="text" name="label" maxlength="50" placeholder="例：A-1">
+        </label>
+        <div class="field-row">
+          <label class="field"><span class="field__label">X</span><input class="field__input" type="number" name="x" min="0"></label>
+          <label class="field"><span class="field__label">Y</span><input class="field__input" type="number" name="y" min="0"></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span class="field__label">幅</span><input class="field__input" type="number" name="width" min="1"></label>
+          <label class="field"><span class="field__label">奥行き</span><input class="field__input" type="number" name="height" min="1"></label>
+        </div>
+        <div class="field">
+          <span class="field__label">向き</span>
+          <div class="input-row">
+            <button type="button" class="button button--ghost" data-rotate="-90" title="左に回転">⟲ 左</button>
+            <button type="button" class="button button--ghost" data-rotate="90" title="右に回転">右 ⟳</button>
+          </div>
+        </div>
+        <button type="button" class="button button--ghost button--danger-text" data-delete>この家具を削除</button>
+      </form>
+    </aside>
+  </main>
+
+  <script type="module" src="/js/pages/admin-map-editor.js"></script>
+</body>
+</html>

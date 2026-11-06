@@ -6,6 +6,7 @@
   <title>マイプロフィール | オフィス座席・従業員管理</title>
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/map.css">
 </head>
 <body data-role="general">
   <header id="app-header"></header>
@@ -19,7 +20,11 @@
         <div data-fields class="form"></div>
         <div class="field">
           <span class="field__label">デフォルト座席</span>
-          <span class="field__hint" id="default-seat">未設定（オフィスマップの準備ができたら設定できます）</span>
+          <div class="input-row input-row--center">
+            <span id="default-seat">未設定</span>
+            <button type="button" class="button button--ghost button--small" id="pick-seat">座席を選ぶ</button>
+          </div>
+          <span class="field__hint">出社するときに、最初から選ばれた状態になる座席です。</span>
         </div>
         <div class="panel__actions">
           <button type="submit" class="button">保存する</button>

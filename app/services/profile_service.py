@@ -42,7 +42,14 @@ class ProfileService:
         profile = self.profiles.get(user.id, user.organization_id)
         if profile is None:
             raise NotFoundError("プロフィールが未登録です", code="PROFILE_NOT_REGISTERED")
-        return ProfileDetail(profile=profile, skills=self.user_skills.list(user.id))
+        seat = (
+            self.furniture.seat_info(profile.default_seat_id, user.organization_id)
+            if profile.default_seat_id
+            else None
+        )
+        return ProfileDetail(
+            profile=profile, skills=self.user_skills.list(user.id), default_seat=seat
+        )
 
     def save_profile(
         self,

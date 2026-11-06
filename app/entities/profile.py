@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import date
 
 from app.entities.master_data import SkillCategory
+from app.entities.office import SeatInfo
 
 
 @dataclass(frozen=True)
@@ -57,3 +58,4 @@ class ProfileDetail:
     profile: Profile
     skills: list[UserSkill]
     presence: Presence | None = None
+    default_seat: SeatInfo | None = None

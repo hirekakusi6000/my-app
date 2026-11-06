@@ -6,13 +6,33 @@
   <title>マップ | オフィス座席・従業員管理</title>
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/map.css">
 </head>
 <body>
   <header id="app-header"></header>
-  <main class="page">
-    <h1>マップ</h1>
-    <p>この画面はオフィスマップの機能で実装します。</p>
+  <main class="map-page">
+    <nav class="map-page__rooms" aria-label="フロアと部屋">
+      <ul class="room-nav" id="room-nav"></ul>
+    </nav>
+
+    <section class="map-page__main">
+      <div class="map-page__title">
+        <h1 id="room-title">マップ</h1>
+        <span class="map-page__updated" id="updated"></span>
+      </div>
+      <div class="map-page__stage" id="stage"></div>
+    </section>
+
+    <aside class="map-page__side">
+      <h2 class="editor__heading">表示の見方</h2>
+      <ul class="legend">
+        <li><span class="legend__dot legend__dot--present"></span>在席中</li>
+        <li><span class="legend__dot legend__dot--away"></span>離席中</li>
+      </ul>
+      <p class="field__hint">アイコンをクリックするとプロフィールを表示します。表示は30秒ごとに自動で更新されます。</p>
+      <div class="notice" id="presence-note">出社・リモート・離席などの操作は、次の「出勤・在席」の機能で追加します。</div>
+    </aside>
   </main>
-  <script type="module" src="/js/pages/placeholder.js"></script>
+  <script type="module" src="/js/pages/map.js"></script>
 </body>
 </html>

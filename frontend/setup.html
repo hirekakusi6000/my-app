@@ -6,6 +6,7 @@
   <title>初回設定 | オフィス座席・従業員管理</title>
   <link rel="stylesheet" href="/css/base.css">
   <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/map.css">
 </head>
 <body>
   <header id="app-header"></header>
@@ -71,7 +72,11 @@
       <div data-panel="seat" hidden>
         <h1 class="card__title">デフォルト座席</h1>
         <p class="card__lead">よく座る座席を設定しておくと、出社するときに最初から選ばれた状態になります。</p>
-        <p class="notice">オフィスマップの準備ができたら、マイプロフィールから設定できます。</p>
+        <div class="input-row input-row--center seat-step">
+          <span>現在の設定：<strong id="seat-label">未設定</strong></span>
+          <button type="button" class="button button--ghost" id="pick-seat">座席を選ぶ</button>
+        </div>
+        <p class="field__hint">あとからマイプロフィールで変更できます。設定しなくても始められます。</p>
         <a class="button button--block" href="/map.html">はじめる</a>
       </div>
     </section>

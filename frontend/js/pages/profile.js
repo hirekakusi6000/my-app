@@ -3,6 +3,7 @@ import { masterDataApi } from "../api/master-data.js";
 import { profileApi } from "../api/profile.js";
 import { renderHeader } from "../components/app-header.js";
 import { renderProfileFields } from "../components/profile-fields.js";
+import { pickSeat } from "../components/seat-picker.js";
 import { renderSkillsEditor } from "../components/skills-editor.js";
 import { requireAuth } from "../lib/auth-guard.js";
 import { handleSubmit, showFormError } from "../lib/form.js";
@@ -19,7 +20,35 @@ const skillsForm = document.getElementById("skills-form");
 let profileFields;
 let skillsEditor;
 
+function seatLabel(seat) {
+  if (!seat) return "未設定";
+  return `${seat.floor_name} / ${seat.room_name}${seat.label ? ` / ${seat.label}` : ""}`;
+}
+
+document.getElementById("pick-seat").addEventListener("click", async () => {
+  const result = await pickSeat({
+    currentSeatId: profile.default_seat_id,
+    currentRoomId: profile.default_seat?.room_id ?? null,
+    title: "デフォルト座席を選ぶ",
+  });
+  if (!result) return;
+  try {
+    profile = await profileApi.save({
+      name: profile.name,
+      birthDate: profile.birth_date,
+      positionName: profile.position,
+      jobTypeName: profile.job_type,
+      defaultSeatId: result.seatId,
+    });
+    render();
+    showToast(result.seatId ? "デフォルト座席を設定しました" : "デフォルト座席の設定を外しました");
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+});
+
 function render() {
+  document.getElementById("default-seat").textContent = seatLabel(profile.default_seat);
   profileFields = renderProfileFields(profileForm.querySelector("[data-fields]"), masterData, profile, {
     allowAvatarDelete: true,
   });

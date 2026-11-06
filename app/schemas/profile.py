@@ -41,6 +41,14 @@ class UserSkillResponse(BaseModel):
     years: int
 
 
+class DefaultSeatResponse(BaseModel):
+    seat_id: int
+    label: str | None
+    room_id: int
+    room_name: str
+    floor_name: str
+
+
 class MyProfileResponse(BaseModel):
     user_id: int
     name: str
@@ -50,6 +58,7 @@ class MyProfileResponse(BaseModel):
     job_type: str | None
     is_engineer: bool
     default_seat_id: int | None
+    default_seat: DefaultSeatResponse | None
     avatar_url: str | None
     skills: list[UserSkillResponse]
 
