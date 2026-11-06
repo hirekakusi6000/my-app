@@ -3,6 +3,7 @@
 import sqlite3
 
 from fastapi import APIRouter, Depends, Response, status
+from pydantic import BaseModel
 
 from app.api.deps import SESSION_COOKIE, get_avatar_storage, require_master
 from app.db.connection import get_db
@@ -14,6 +15,7 @@ from app.schemas.organization import (
 )
 from app.services.avatar_storage import AvatarStorage
 from app.services.organization_service import OrganizationService
+from app.services.sample_data_service import SampleDataService
 
 router = APIRouter(prefix="/organization", tags=["organization"])
 
@@ -56,3 +58,32 @@ def delete_organization(
     service.delete(master, password=body.password, confirm_name=body.confirm_name)
     # 組織と一緒にセッションも消えているので、ブラウザの Cookie も消しておく
     response.delete_cookie(SESSION_COOKIE, path="/")
+
+
+# ───────── お試し用のサンプルデータ ─────────
+
+
+class SampleDataStatus(BaseModel):
+    available: bool
+
+
+def get_sample_service(conn: sqlite3.Connection = Depends(get_db)) -> SampleDataService:
+    return SampleDataService(conn)
+
+
+@router.get("/sample-data", response_model=SampleDataStatus)
+def read_sample_data_status(
+    master: User = Depends(require_master),
+    service: SampleDataService = Depends(get_sample_service),
+) -> SampleDataStatus:
+    """サンプルデータを作成できる（まだフロアも従業員もない）か。"""
+    return SampleDataStatus(available=service.is_available(master))
+
+
+@router.post("/sample-data", status_code=status.HTTP_201_CREATED, response_model=SampleDataStatus)
+def create_sample_data(
+    master: User = Depends(require_master),
+    service: SampleDataService = Depends(get_sample_service),
+) -> SampleDataStatus:
+    service.create(master)
+    return SampleDataStatus(available=False)

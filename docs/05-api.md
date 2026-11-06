@@ -74,6 +74,8 @@
 | GET | `/organization` | 自分の組織 |
 | PATCH | `/organization` | 組織名の変更 |
 | DELETE | `/organization` | 組織とすべてのデータを完全に削除。`{password, confirm_name}` で本人確認（違えば 422 `INVALID_PASSWORD` / `NAME_MISMATCH`） |
+| GET | `/organization/sample-data` | サンプルデータを作成できるか（`{available}`） |
+| POST | `/organization/sample-data` | サンプルデータを作成。フロアか一般ユーザーがすでにあると 422 `ORGANIZATION_NOT_EMPTY` |
 
 ## 動作確認用
 | メソッド | パス | 内容 |

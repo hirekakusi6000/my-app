@@ -25,8 +25,8 @@ class FurnitureRepository:
         ).fetchall()
         return [Furniture.from_row(r) for r in rows]
 
-    def create(self, *, organization_id: int, room_id: int, item: Furniture) -> None:
-        self.conn.execute(
+    def create(self, *, organization_id: int, room_id: int, item: Furniture) -> int:
+        cur = self.conn.execute(
             "INSERT INTO furniture"
             " (organization_id, room_id, type, label, x, y, width, height, rotation)"
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -42,6 +42,7 @@ class FurnitureRepository:
                 item.rotation,
             ),
         )
+        return cur.lastrowid
 
     def update(self, *, organization_id: int, room_id: int, item: Furniture) -> None:
         self.conn.execute(
