@@ -46,3 +46,26 @@ class User:
             created_at=row["created_at"],
             updated_at=row["updated_at"],
         )
+
+
+@dataclass(frozen=True)
+class UserSummary:
+    """ユーザー管理画面の一覧に表示する情報。"""
+
+    id: int
+    email: str
+    role: Role
+    must_change_password: bool
+    profile_name: str | None
+    created_at: str
+
+    @classmethod
+    def from_row(cls, row: sqlite3.Row) -> "UserSummary":
+        return cls(
+            id=row["id"],
+            email=row["email"],
+            role=Role(row["role"]),
+            must_change_password=bool(row["must_change_password"]),
+            profile_name=row["profile_name"],
+            created_at=row["created_at"],
+        )

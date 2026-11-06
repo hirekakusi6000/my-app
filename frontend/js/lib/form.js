@@ -6,6 +6,7 @@ const FIELD_LABELS = {
   email: "メールアドレスの形式が正しくありません",
   password: "パスワードは8〜128文字で入力してください",
   new_password: "パスワードは8〜128文字で入力してください",
+  initial_password: "パスワードは8〜128文字で入力してください",
   organization_name: "組織名は1〜100文字で入力してください",
 };
 
