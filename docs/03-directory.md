@@ -21,7 +21,7 @@ my-app/
 │     └─ v1/
 │        ├─ router.py
 │        └─ endpoints/           # auth / me / users / profiles / skills / master_data /
-│                                # floors / rooms / presence / troubles / health
+│                                # floors / rooms / presence / health
 ├─ migrations/                   # 0001_init.sql, 0002_xxx.sql ...
 ├─ frontend/
 │  ├─ *.html                     # 共通・一般ユーザー向けの画面

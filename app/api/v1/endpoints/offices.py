@@ -9,7 +9,6 @@ from app.api.v1.presenters import avatar_url
 from app.db.connection import get_db
 from app.entities.office import Floor, Furniture, Room
 from app.entities.user import User
-from app.repositories.trouble_repository import TroubleRepository
 from app.schemas.office import (
     FloorCreateRequest,
     FloorResponse,
@@ -193,11 +192,7 @@ def read_occupancy(
     room_id: int,
     user: User = Depends(require_active_user),
     service: OfficeService = Depends(get_service),
-    conn: sqlite3.Connection = Depends(get_db),
 ) -> list[OccupantResponse]:
-    occupants = service.get_occupants(user, room_id)
-    # 未解決の困りごとがある人には、マップ上で目印を出す
-    troubled = TroubleRepository(conn).users_with_open_troubles(user.organization_id)
     return [
         OccupantResponse(
             seat_id=o.seat_id,
@@ -205,7 +200,6 @@ def read_occupancy(
             name=o.name,
             status=o.status,
             avatar_url=avatar_url(o.user_id, o.avatar_path),
-            has_open_trouble=o.user_id in troubled,
         )
-        for o in occupants
+        for o in service.get_occupants(user, room_id)
     ]

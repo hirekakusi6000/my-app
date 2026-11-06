@@ -244,7 +244,6 @@ def test_occupancy_lists_seated_users(client, seated):
             "name": "山田 太郎",
             "status": "present",
             "avatar_url": None,
-            "has_open_trouble": False,
         }
     ]
     # マスターも見られる

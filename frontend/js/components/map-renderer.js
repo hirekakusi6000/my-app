@@ -206,24 +206,6 @@ export function drawOccupants(layer, seats, occupants, onClick) {
       g.append(initial);
     }
 
-    // 未解決の困りごとがある人には「？」の目印を付ける（声をかけてほしいサイン）
-    if (o.has_open_trouble) {
-      const bx = cx + r * 0.75;
-      const by = cy - r * 0.75;
-      const badge = svgEl("g", { class: "occupant__trouble" });
-      badge.append(svgEl("circle", { cx: bx, cy: by, r: 8 }));
-      const mark = svgEl("text", {
-        x: bx,
-        y: by,
-        "dominant-baseline": "central",
-        "text-anchor": "middle",
-      });
-      mark.textContent = "?";
-      badge.append(mark);
-      g.append(badge);
-      title.textContent += " ・困りごとあり";
-    }
-
     const nameTag = svgEl("text", {
       x: cx,
       y: cy + r + 12,
