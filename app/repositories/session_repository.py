@@ -34,5 +34,8 @@ class SessionRepository:
             (user_id, keep_token_hash),
         )
 
+    def delete_all_for_user(self, user_id: int) -> None:
+        self.conn.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
+
     def delete_expired(self, now: str) -> None:
         self.conn.execute("DELETE FROM sessions WHERE expires_at <= ?", (now,))
