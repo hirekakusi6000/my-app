@@ -1,0 +1,387 @@
+/* ───────── 部屋のマップ（SVG） ───────── */
+.room-map {
+  display: block;
+  max-width: none;
+  height: auto;
+  user-select: none;
+}
+
+.room-map__floor {
+  fill: #fbfbf9;
+}
+
+.room-map__grid {
+  fill: none;
+  stroke: #e6e8eb;
+  stroke-width: 1;
+}
+
+.room-map__border {
+  fill: none;
+  stroke: #8c959f;
+  stroke-width: 3;
+}
+
+.furniture__body {
+  stroke-width: 1.5;
+}
+
+.furniture--desk .furniture__body {
+  fill: #ead9bd;
+  stroke: #b08d57;
+}
+
+.furniture--chair .furniture__body {
+  fill: #ffffff;
+  stroke: #57606a;
+}
+
+.furniture--chair .furniture__back {
+  fill: #57606a;
+}
+
+.furniture--wall .furniture__body {
+  fill: #6e7781;
+  stroke: #57606a;
+}
+
+.furniture--door .furniture__body {
+  fill: #f6f8fa;
+  stroke: #8c959f;
+  stroke-dasharray: 4 3;
+}
+
+.furniture__swing {
+  fill: none;
+  stroke: #8c959f;
+  stroke-width: 1.5;
+}
+
+.furniture--other .furniture__body {
+  fill: #ddf4ff;
+  stroke: #54aeff;
+}
+
+.furniture__label {
+  font-size: 12px;
+  fill: #424a53;
+  pointer-events: none;
+}
+
+.furniture--wall .furniture__label {
+  fill: #ffffff;
+}
+
+/* 編集画面 */
+.room-map--editable .furniture {
+  cursor: move;
+}
+
+.selection {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+  pointer-events: none;
+}
+
+.selection__handle {
+  fill: #ffffff;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  cursor: nwse-resize;
+}
+
+/* 閲覧・座席選択 */
+.room-map--pickable .furniture--chair {
+  cursor: pointer;
+}
+
+.room-map--pickable .furniture--chair:hover .furniture__body {
+  fill: #ddf4ff;
+}
+
+.furniture--picked .furniture__body {
+  fill: #b6e3ff;
+  stroke: var(--color-primary);
+  stroke-width: 3;
+}
+
+.furniture--highlight .furniture__body {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+}
+
+.furniture--taken .furniture__body {
+  fill: #eaeef2;
+}
+
+/* 座っている人 */
+.occupant {
+  cursor: pointer;
+}
+
+.occupant:focus {
+  outline: none;
+}
+
+.occupant:focus .occupant__ring,
+.occupant:hover .occupant__ring {
+  stroke-width: 6;
+}
+
+.occupant__ring {
+  fill: #ffffff;
+  stroke-width: 4;
+}
+
+.occupant--present .occupant__ring {
+  stroke: var(--color-present);
+}
+
+.occupant--away .occupant__ring {
+  stroke: var(--color-away);
+}
+
+.occupant--away image,
+.occupant--away .occupant__face {
+  opacity: 0.55;
+}
+
+.occupant__face {
+  fill: #d0d7de;
+}
+
+.occupant__initial {
+  font-size: 15px;
+  font-weight: 700;
+  fill: #424a53;
+}
+
+.occupant__name {
+  font-size: 11px;
+  font-weight: 600;
+  fill: #1f2328;
+  paint-order: stroke;
+  stroke: #ffffff;
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+/* ───────── マップ編集画面 ───────── */
+.editor {
+  display: grid;
+  grid-template-columns: 200px 1fr 260px;
+  height: calc(100vh - 56px);
+}
+
+.editor__palette,
+.editor__props {
+  padding: 16px;
+  background: var(--color-surface);
+  overflow-y: auto;
+}
+
+.editor__palette {
+  border-right: 1px solid var(--color-border);
+}
+
+.editor__props {
+  border-left: 1px solid var(--color-border);
+}
+
+.editor__heading {
+  margin: 0 0 8px;
+  font-size: 0.875rem;
+}
+
+.editor__palette-items {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.palette-item {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.palette-item:hover {
+  border-color: var(--color-primary);
+  background: #f6f8fa;
+}
+
+.editor__help {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.editor__canvas {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.editor__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.editor__spacer {
+  flex: 1;
+}
+
+.editor__status {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.editor__status--dirty {
+  color: var(--color-away);
+  font-weight: 600;
+}
+
+.editor__stage {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.editor__type {
+  font-weight: 700;
+}
+
+kbd {
+  padding: 0 4px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  font-size: 0.75rem;
+  background: #f6f8fa;
+}
+
+/* ───────── マップ（閲覧）画面 ───────── */
+.map-page {
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+  height: calc(100vh - 56px);
+}
+
+.map-page__rooms,
+.map-page__side {
+  padding: 16px;
+  background: var(--color-surface);
+  overflow-y: auto;
+}
+
+.map-page__rooms {
+  border-right: 1px solid var(--color-border);
+}
+
+.map-page__side {
+  border-left: 1px solid var(--color-border);
+}
+
+.map-page__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.map-page__title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 20px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.map-page__title h1 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.map-page__updated {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.map-page__stage {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.room-nav {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.room-nav__floor {
+  margin: 12px 0 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.room-nav__room {
+  display: block;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  border-radius: var(--radius);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.room-nav__room:hover {
+  background: #f6f8fa;
+}
+
+.room-nav__room[aria-current="true"] {
+  background: #ddf4ff;
+  font-weight: 600;
+}
+
+.legend {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.legend__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+}
+
+.legend__dot--present {
+  background: var(--color-present);
+}
+
+.legend__dot--away {
+  background: var(--color-away);
+}
+
+.legend__dot--remote {
+  background: var(--color-remote);
+}

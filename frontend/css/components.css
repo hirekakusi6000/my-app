@@ -429,8 +429,18 @@ a {
 
 .field-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16px;
+}
+
+/* 狭い欄でも入力欄がはみ出さないようにする */
+.field,
+.field__input {
+  min-width: 0;
+}
+
+.field-row .field__input {
+  width: 100%;
 }
 
 .checkbox {
@@ -602,4 +612,135 @@ a {
   padding: 16px;
   text-align: center;
   color: var(--color-muted);
+}
+
+/* ───────── 空の状態・パネルの見出し ───────── */
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.panel__head .panel__title {
+  margin: 0;
+}
+
+.panel__head-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.input-row--center {
+  align-items: center;
+}
+
+/* ───────── プロフィールのポップアップ ───────── */
+.profile-popup {
+  width: 520px;
+}
+
+.profile-popup__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.profile-popup__meta {
+  margin: 2px 0 6px;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+}
+
+.profile-popup__comment {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: #f6f8fa;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+.profile-popup__skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.profile-popup__skill-category {
+  width: 120px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.chip {
+  padding: 2px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  background: #ffffff;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #8c959f;
+}
+
+.status-badge--present {
+  background: var(--color-present);
+}
+
+.status-badge--away {
+  background: var(--color-away);
+}
+
+.status-badge--remote {
+  background: var(--color-remote);
+}
+
+/* ───────── 座席の選択 ───────── */
+.seat-picker {
+  width: min(960px, 90vw);
+}
+
+.seat-picker__toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.seat-picker__stage {
+  max-height: 60vh;
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: #f6f8fa;
+}
+
+.seat-picker .dialog__actions {
+  margin-top: 16px;
 }

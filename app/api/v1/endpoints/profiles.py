@@ -4,11 +4,14 @@ from fastapi import APIRouter, Depends, File, UploadFile, status
 from fastapi.responses import FileResponse
 
 from app.api.deps import get_avatar_storage, require_active_user, require_general
+from app.api.v1.presenters import avatar_url
 from app.core.time import calculate_age, today_jst
 from app.db.connection import get_db
+from app.entities.office import SeatInfo
 from app.entities.profile import Profile, ProfileDetail, UserSkill
 from app.entities.user import User
 from app.schemas.profile import (
+    DefaultSeatResponse,
     MyProfileResponse,
     PresenceSummary,
     ProfileRequest,
@@ -30,10 +33,19 @@ def get_service(
 
 
 def _avatar_url(profile: Profile) -> str | None:
-    if not profile.avatar_path:
+    return avatar_url(profile.user_id, profile.avatar_path)
+
+
+def _seat(seat: SeatInfo | None) -> DefaultSeatResponse | None:
+    if seat is None:
         return None
-    # ファイル名が変わると URL も変わるので、画像を変えたときにブラウザの古いキャッシュが使われない
-    return f"/api/v1/users/{profile.user_id}/avatar?v={profile.avatar_path[:8]}"
+    return DefaultSeatResponse(
+        seat_id=seat.seat_id,
+        label=seat.label,
+        room_id=seat.room_id,
+        room_name=seat.room_name,
+        floor_name=seat.floor_name,
+    )
 
 
 def _skill_list(skills: list[UserSkill]) -> list[UserSkillResponse]:
@@ -55,6 +67,7 @@ def _my_profile(detail: ProfileDetail) -> MyProfileResponse:
         job_type=p.job_type,
         is_engineer=p.is_engineer,
         default_seat_id=p.default_seat_id,
+        default_seat=_seat(detail.default_seat),
         avatar_url=_avatar_url(p),
         skills=_skills(detail),
     )
