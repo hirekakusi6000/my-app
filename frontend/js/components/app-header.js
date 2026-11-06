@@ -11,9 +11,11 @@ const NAV = {
     { href: "/admin/map-editor.html", label: "マップ編集" },
     { href: "/admin/seats.html", label: "座席の管理" },
     { href: "/admin/master-data.html", label: "候補の管理" },
+    { href: "/troubles.html", label: "困りごと" },
   ],
   general: [
     { href: "/map.html", label: "マップ" },
+    { href: "/troubles.html", label: "困りごと" },
     { href: "/profile.html", label: "プロフィール" },
   ],
 };

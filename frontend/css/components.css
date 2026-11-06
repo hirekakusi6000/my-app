@@ -763,3 +763,98 @@ a {
   border: 1px solid var(--color-border);
   border-radius: 8px;
 }
+
+/* ───────── 困りごと ───────── */
+.trouble-list {
+  display: grid;
+  gap: 12px;
+}
+
+.trouble {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #d4a72c;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.trouble--resolved {
+  border-left-color: var(--color-present);
+  opacity: 0.85;
+}
+
+.trouble__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8125rem;
+}
+
+.trouble__author {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trouble__author:hover span:last-child {
+  text-decoration: underline;
+}
+
+.trouble__date {
+  margin-left: auto;
+  color: var(--color-muted);
+}
+
+.trouble__title {
+  margin: 10px 0 4px;
+  font-size: 1rem;
+}
+
+.trouble__body {
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 0.875rem;
+  color: #424a53;
+}
+
+.trouble__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.avatar--sm {
+  width: 24px;
+  height: 24px;
+  font-size: 0.75rem;
+}
+
+.field__textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.profile-popup__troubles {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: #fff8c5;
+}
+
+.profile-popup__section-title {
+  margin: 0 0 4px;
+  font-size: 0.8125rem;
+}
+
+.profile-popup__troubles ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.875rem;
+}
