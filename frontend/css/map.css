@@ -484,3 +484,29 @@ kbd {
   font-size: 0.8125rem;
   color: var(--color-muted);
 }
+
+/* 困りごとありの目印 */
+.occupant__trouble circle {
+  fill: #cf222e;
+  stroke: #ffffff;
+  stroke-width: 2;
+}
+
+.occupant__trouble text {
+  font-size: 11px;
+  font-weight: 700;
+  fill: #ffffff;
+}
+
+.legend__trouble {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: #cf222e;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}

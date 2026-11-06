@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>困りごと | オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+<body>
+  <header id="app-header"></header>
+  <main class="page page--narrow">
+    <div class="page__head">
+      <div>
+        <h1 class="page__title">困りごと</h1>
+        <p class="page__lead">困っていることを共有して、助けられる人が声をかけられるようにしましょう。</p>
+      </div>
+      <button type="button" class="button" id="open-create" hidden>＋ 困りごとを登録</button>
+    </div>
+
+    <div class="tabs" role="tablist">
+      <button type="button" class="tabs__tab" role="tab" data-tab="open" aria-selected="true">未解決 <span class="count" data-count="open"></span></button>
+      <button type="button" class="tabs__tab" role="tab" data-tab="resolved" aria-selected="false">解決済み <span class="count" data-count="resolved"></span></button>
+      <button type="button" class="tabs__tab" role="tab" data-tab="mine" aria-selected="false" hidden>自分の <span class="count" data-count="mine"></span></button>
+    </div>
+
+    <section class="panel">
+      <div class="trouble-list" id="list"></div>
+    </section>
+  </main>
+
+  <dialog class="dialog" id="edit-dialog">
+    <form class="form" id="edit-form" novalidate>
+      <h2 class="dialog__title" data-title>困りごとを登録</h2>
+      <div class="alert alert--error" data-form-error hidden></div>
+      <label class="field">
+        <span class="field__label">タイトル</span>
+        <input class="field__input" type="text" name="title" maxlength="100" placeholder="例：Docker のビルドが通りません" required>
+        <span class="field__error" data-error-for="title"></span>
+      </label>
+      <label class="field">
+        <span class="field__label">詳しい内容（任意）</span>
+        <textarea class="field__input field__textarea" name="body" maxlength="2000" rows="6" placeholder="試したこと、エラーメッセージなど"></textarea>
+        <span class="field__error" data-error-for="body"></span>
+      </label>
+      <div class="dialog__actions">
+        <button type="button" class="button button--ghost" data-close>キャンセル</button>
+        <button type="submit" class="button">保存する</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/js/pages/troubles.js"></script>
+</body>
+</html>
