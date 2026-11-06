@@ -71,6 +71,13 @@ def require_active_user(
     return user
 
 
+def require_active_general(user: User = Depends(require_active_user)) -> User:
+    """初回設定が終わった一般ユーザー（出勤・在席の操作など）。"""
+    if user.role is not Role.GENERAL:
+        raise ForbiddenError()
+    return user
+
+
 def get_avatar_storage(settings: Settings = Depends(get_settings_from_app)) -> AvatarStorage:
     return AvatarStorage(settings.upload_dir)
 

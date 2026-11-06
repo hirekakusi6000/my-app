@@ -9,6 +9,7 @@ const NAV = {
     { href: "/admin/users.html", label: "ユーザー管理" },
     { href: "/admin/offices.html", label: "フロア・部屋" },
     { href: "/admin/map-editor.html", label: "マップ編集" },
+    { href: "/admin/seats.html", label: "座席の管理" },
     { href: "/admin/master-data.html", label: "候補の管理" },
   ],
   general: [
