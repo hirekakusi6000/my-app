@@ -1,0 +1,20 @@
+# 改行コードをリポジトリでも作業フォルダでも LF に統一する。
+# （Windows の core.autocrlf=true による CRLF への変換と、コミット時の警告をなくすため）
+* text=auto eol=lf
+
+# Windows 専用のスクリプトは CRLF のままにする
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# バイナリファイル（改行の変換や差分の表示をしない）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.db binary
+*.sqlite binary
