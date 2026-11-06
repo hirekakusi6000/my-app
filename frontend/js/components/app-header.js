@@ -11,6 +11,7 @@ const NAV = {
     { href: "/admin/map-editor.html", label: "マップ編集" },
     { href: "/admin/seats.html", label: "座席の管理" },
     { href: "/admin/master-data.html", label: "候補の管理" },
+    { href: "/admin/organization.html", label: "組織の設定" },
   ],
   general: [
     { href: "/map.html", label: "マップ" },
