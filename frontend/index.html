@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オフィス座席・従業員管理</title>
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <main class="placeholder">
+    <h1>オフィス座席・従業員管理</h1>
+    <p>開発環境の構築が完了しました。</p>
+    <p>サーバーの状態：<span id="health">確認中...</span></p>
+  </main>
+  <script type="module">
+    import { api } from "/js/api/client.js";
+
+    const el = document.getElementById("health");
+    try {
+      const data = await api.get("/health");
+      el.textContent = `API ${data.status} / DB ${data.database}`;
+    } catch (err) {
+      el.textContent = `エラー: ${err.message}`;
+    }
+  </script>
+</body>
+</html>

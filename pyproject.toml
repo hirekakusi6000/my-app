@@ -1,0 +1,22 @@
+[project]
+name = "office-seat-manager"
+version = "0.1.0"
+description = "オフィス座席・従業員管理システム"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".venv", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI の Depends() を引数の既定値に書く書き方を許可する
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query", "fastapi.Path"]
