@@ -44,7 +44,7 @@ class PeopleRepository:
             params.extend([skill, query.min_years])
 
         rows = self.conn.execute(
-            "SELECT pr.user_id, pr.status, pr.comment, pr.seat_id,"
+            "SELECT pr.user_id, pr.status, pr.comment, pr.seat_id, pr.updated_at,"
             "       p.name, p.avatar_path,"
             "       pos.name AS position_name, jt.name AS job_type_name,"
             "       f.label AS seat_label, r.id AS room_id, r.name AS room_name,"
@@ -84,6 +84,7 @@ class PeopleRepository:
                     else None
                 ),
                 skills=tuple(skills.get(r["user_id"], ())),
+                updated_at=r["updated_at"],
             )
             for r in rows
         ]

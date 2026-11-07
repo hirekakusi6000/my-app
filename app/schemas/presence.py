@@ -40,3 +40,8 @@ class PresenceResponse(BaseModel):
     comment: str | None
     seat: SeatResponse | None
     updated_at: str
+    is_stale: bool  # 出勤中のまま、日本時間の今日になってから一度も更新していない
+
+
+class ResetStaleResponse(BaseModel):
+    count: int

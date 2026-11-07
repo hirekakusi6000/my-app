@@ -84,3 +84,5 @@ class OccupantResponse(BaseModel):
     name: str | None
     status: str
     avatar_url: str | None
+    updated_at: str
+    is_stale: bool

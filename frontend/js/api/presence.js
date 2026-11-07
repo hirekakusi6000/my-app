@@ -13,4 +13,5 @@ export const presenceApi = {
   },
   list: () => api.get("/presence"),
   releaseSeat: (seatId) => api.delete(`/seats/${seatId}/occupant`),
+  resetStale: () => api.post("/presence/reset-stale"),
 };

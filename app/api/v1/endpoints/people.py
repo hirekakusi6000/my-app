@@ -27,6 +27,8 @@ class PersonResponse(BaseModel):
     comment: str | None
     seat: SeatResponse | None
     skills: list[UserSkillResponse]
+    updated_at: str
+    is_stale: bool
 
 
 def get_service(conn: sqlite3.Connection = Depends(get_db)) -> PeopleService:
@@ -53,6 +55,8 @@ def _response(p: Person) -> PersonResponse:
             if p.seat
             else None
         ),
+        updated_at=p.updated_at,
+        is_stale=p.is_stale,
         skills=[
             UserSkillResponse(category=s.category, name=s.name, years=s.years) for s in p.skills
         ],

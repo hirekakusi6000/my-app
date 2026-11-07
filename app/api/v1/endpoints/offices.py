@@ -8,6 +8,7 @@ from app.api.deps import require_active_user, require_master, require_password_c
 from app.api.v1.presenters import avatar_url
 from app.db.connection import get_db
 from app.entities.office import Floor, Furniture, Room
+from app.entities.presence import is_stale
 from app.entities.user import User
 from app.schemas.office import (
     FloorCreateRequest,
@@ -200,6 +201,8 @@ def read_occupancy(
             name=o.name,
             status=o.status,
             avatar_url=avatar_url(o.user_id, o.avatar_path),
+            updated_at=o.updated_at,
+            is_stale=is_stale(o.status, o.updated_at),
         )
         for o in service.get_occupants(user, room_id)
     ]

@@ -60,6 +60,18 @@ class PresenceRepository:
             (status.value, seat_id, comment, now, user_id, organization_id),
         )
 
+    def reset_stale(self, organization_id: int, *, before: str, now: str) -> int:
+        """before より前から更新していない出勤中の人を「未出勤」に戻し、座席を空ける。人数を返す。
+
+        ひとことコメントは本人のものなので残す。
+        """
+        cur = self.conn.execute(
+            "UPDATE presence SET status = 'not_working', seat_id = NULL, updated_at = ?"
+            " WHERE organization_id = ? AND status <> 'not_working' AND updated_at < ?",
+            (now, organization_id, before),
+        )
+        return cur.rowcount
+
     def find_user_on_seat(self, seat_id: int, organization_id: int) -> int | None:
         row = self.conn.execute(
             "SELECT user_id FROM presence WHERE seat_id = ? AND organization_id = ?",

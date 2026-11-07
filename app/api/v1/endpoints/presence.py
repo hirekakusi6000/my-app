@@ -7,7 +7,12 @@ from app.api.v1.presenters import avatar_url
 from app.db.connection import get_db
 from app.entities.presence import PresenceEntry
 from app.entities.user import User
-from app.schemas.presence import PresenceRequest, PresenceResponse, SeatResponse
+from app.schemas.presence import (
+    PresenceRequest,
+    PresenceResponse,
+    ResetStaleResponse,
+    SeatResponse,
+)
 from app.services.presence_service import PresenceService
 
 router = APIRouter(tags=["presence"])
@@ -36,6 +41,7 @@ def _response(e: PresenceEntry) -> PresenceResponse:
             else None
         ),
         updated_at=e.updated_at,
+        is_stale=e.is_stale,
     )
 
 
@@ -73,3 +79,12 @@ def release_seat(
     service: PresenceService = Depends(get_service),
 ) -> None:
     service.release_seat(master, seat_id)
+
+
+@router.post("/presence/reset-stale", response_model=ResetStaleResponse)
+def reset_stale_presence(
+    master: User = Depends(require_master),
+    service: PresenceService = Depends(get_service),
+) -> ResetStaleResponse:
+    """前日から状態を更新していない出勤中の人を、まとめて「未出勤」に戻す（退勤し忘れの対策）。"""
+    return ResetStaleResponse(count=service.reset_stale(master))
