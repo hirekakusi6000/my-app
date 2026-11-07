@@ -26,6 +26,14 @@ def verify_dummy_password(password: str) -> None:
     verify_password(password, _DUMMY_HASH)
 
 
+_PASSWORD_CHARS = "abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+
+
+def generate_initial_password(length: int = 12) -> str:
+    """初期パスワードを作る。見間違えやすい文字（0/O、1/l/I など）は使わない。"""
+    return "".join(secrets.choice(_PASSWORD_CHARS) for _ in range(length))
+
+
 def generate_session_token() -> str:
     return secrets.token_urlsafe(32)
 

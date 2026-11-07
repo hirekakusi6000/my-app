@@ -33,6 +33,7 @@
 | PATCH | `/users/{id}` | メールアドレスの変更 |
 | POST | `/users/{id}/password-reset` | パスワードのリセット（次のログインで変更を強制） |
 | DELETE | `/users/{id}` | 物理削除（自分自身は削除できない） |
+| POST | `/users/import?dry_run=` | CSV で一括作成（multipart）。見出しは「メールアドレス」「初期パスワード」（英語可、パスワード列は省略可）。UTF-8 / Shift_JIS、100KB・50行まで。`dry_run=true` は確認のみ。1行でもエラーがあれば `created=false` で1人も作成しない。作成時は自動生成分を含む初期パスワードを返す |
 
 ## プロフィール・スキル
 | メソッド | パス | 権限 | 内容 |

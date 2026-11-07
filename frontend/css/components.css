@@ -925,3 +925,38 @@ a {
   height: 44px;
   font-size: 0.9rem;
 }
+
+/* ───────── CSV 一括登録 ───────── */
+.page__head-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dialog--wide {
+  width: min(760px, 90vw);
+}
+
+.csv-example {
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: #f6f8fa;
+  font-size: 0.8125rem;
+}
+
+.table-wrap--scroll {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.mono {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-ok {
+  color: var(--color-present);
+}
