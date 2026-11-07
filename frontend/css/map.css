@@ -509,3 +509,32 @@ kbd {
   stroke-dasharray: 4 3;
   pointer-events: none;
 }
+
+/* 前日から状態を更新していない人（退勤し忘れの可能性） */
+.occupant--stale .occupant__ring {
+  stroke-dasharray: 4 3;
+  stroke-opacity: 0.6;
+}
+
+.occupant--stale image,
+.occupant--stale .occupant__face,
+.occupant--stale .occupant__initial {
+  opacity: 0.35;
+}
+
+.occupant--stale .occupant__name {
+  fill: var(--color-muted);
+}
+
+.legend__dot--stale {
+  background: transparent;
+  border: 2px dashed #8c959f;
+}
+
+.stale-notice {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: #fff8c5;
+  font-size: 0.8125rem;
+}

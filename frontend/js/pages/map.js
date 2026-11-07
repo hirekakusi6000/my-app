@@ -8,6 +8,7 @@ import {
   drawFurniture,
   drawOccupants,
   STATUS_LABELS,
+  staleLabel,
 } from "../components/map-renderer.js";
 import { openProfilePopup } from "../components/profile-popup.js";
 import { renderSampleDataBanner } from "../components/sample-data-banner.js";
@@ -157,6 +158,8 @@ function renderMyStatus() {
   badge.className = `status-badge status-badge--${myPresence.status}`;
   badge.textContent = STATUS_LABELS[myPresence.status];
   document.getElementById("my-seat").textContent = myPresence.seat ? seatLabel(myPresence.seat) : "";
+  // 前日の状態のままなら、今日の状態に更新するよう案内する
+  document.getElementById("my-stale").hidden = !myPresence.is_stale;
 
   const actions = document.getElementById("my-actions");
   actions.replaceChildren();
@@ -316,6 +319,13 @@ function renderRemoteList(entries) {
     name.className = "people-list__name";
     name.textContent = e.name ?? "名前未登録";
     b.append(name);
+    if (e.is_stale) {
+      const stale = document.createElement("span");
+      stale.className = "stale-tag";
+      stale.textContent = "前日から";
+      stale.title = staleLabel(e.updated_at);
+      name.append(" ", stale);
+    }
     if (e.comment) {
       const comment = document.createElement("span");
       comment.className = "people-list__comment";

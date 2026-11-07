@@ -20,6 +20,12 @@
 
     <div class="summary" id="summary"></div>
 
+    <!-- 前日から状態を更新していない人がいるときだけ表示する -->
+    <div class="stale-banner" id="stale-banner" hidden>
+      <span id="stale-text"></span>
+      <button type="button" class="button button--danger" id="reset-stale">まとめて未出勤に戻す</button>
+    </div>
+
     <div class="table-wrap">
       <table class="table">
         <thead>

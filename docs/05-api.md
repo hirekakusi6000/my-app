@@ -68,6 +68,9 @@
 | PUT | `/me/presence` | 一般 | `{status, seat_id, comment}`。使用中の座席なら 409 |
 | GET | `/presence` | 全員 | 組織全員の状態の一覧 |
 | DELETE | `/seats/{seat_id}/occupant` | マスター | 座席を強制的に空ける |
+| POST | `/presence/reset-stale` | マスター | 前日から更新していない出勤中の人をまとめて未出勤に戻す（座席は空き、コメントは残す）。`{count}` |
+
+在席状態・座っている人・メンバー検索の結果には `updated_at` と `is_stale`（出勤中のまま日本時間の今日になってから更新していない）を含める。
 
 ## メンバー検索
 | メソッド | パス | 権限 | 内容 |

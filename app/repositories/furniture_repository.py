@@ -77,7 +77,7 @@ class FurnitureRepository:
 
     def occupants_in_room(self, room_id: int, organization_id: int) -> list[SeatOccupant]:
         rows = self.conn.execute(
-            "SELECT pr.seat_id, pr.user_id, pr.status, p.name, p.avatar_path"
+            "SELECT pr.seat_id, pr.user_id, pr.status, pr.updated_at, p.name, p.avatar_path"
             " FROM presence pr"
             " JOIN furniture f ON f.id = pr.seat_id"
             " LEFT JOIN profiles p ON p.user_id = pr.user_id"
@@ -91,6 +91,7 @@ class FurnitureRepository:
                 name=r["name"],
                 status=r["status"],
                 avatar_path=r["avatar_path"],
+                updated_at=r["updated_at"],
             )
             for r in rows
         ]

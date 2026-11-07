@@ -44,9 +44,42 @@ function renderSummary(entries) {
   );
 }
 
+function renderStaleBanner(entries) {
+  const stale = entries.filter((e) => e.is_stale);
+  const banner = document.getElementById("stale-banner");
+  banner.hidden = stale.length === 0;
+  const seated = stale.filter((e) => e.seat).length;
+  document.getElementById("stale-text").textContent =
+    `前日から状態を更新していない人が ${stale.length}名 います（うち座席を使用中 ${seated}名）。` +
+    "退勤し忘れの可能性があります。";
+}
+
+document.getElementById("reset-stale").addEventListener("click", async () => {
+  if (!confirm("前日から状態を更新していない人を、まとめて「未出勤」に戻しますか？\n座っていた座席は空きます。")) return;
+  try {
+    const { count } = await presenceApi.resetStale();
+    showToast(`${count}名を未出勤に戻しました`);
+  } catch (err) {
+    showToast(err.message, "error");
+  }
+  await reload();
+});
+
+function updatedCell(e) {
+  const td = cell(formatDateTime(e.updated_at));
+  if (e.is_stale) {
+    const tag = document.createElement("span");
+    tag.className = "stale-tag";
+    tag.textContent = "前日から";
+    td.append(" ", tag);
+  }
+  return td;
+}
+
 async function reload() {
   const entries = await presenceApi.list();
   renderSummary(entries);
+  renderStaleBanner(entries);
   const seated = entries.filter((e) => e.seat);
   rowsEl.replaceChildren();
   if (!seated.length) {
@@ -88,7 +121,7 @@ async function reload() {
       statusTd,
       cell(seat),
       cell(e.comment ?? "—", e.comment ? "" : "table__muted"),
-      cell(formatDateTime(e.updated_at)),
+      updatedCell(e),
       actions,
     );
     rowsEl.append(tr);

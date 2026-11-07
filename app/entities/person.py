@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from app.entities.office import SeatInfo
-from app.entities.presence import PresenceStatus
+from app.entities.presence import PresenceStatus, is_stale
 from app.entities.profile import UserSkill
 
 
@@ -18,6 +18,11 @@ class Person:
     comment: str | None
     seat: SeatInfo | None
     skills: tuple[UserSkill, ...]
+    updated_at: str = ""
+
+    @property
+    def is_stale(self) -> bool:
+        return is_stale(self.status, self.updated_at)
 
 
 @dataclass(frozen=True)

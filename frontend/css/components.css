@@ -960,3 +960,31 @@ a {
 .text-ok {
   color: var(--color-present);
 }
+
+/* 前日から状態を更新していない人の目印 */
+.stale-tag {
+  display: inline-block;
+  padding: 0 6px;
+  border: 1px dashed #8c959f;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.stale-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border: 1px solid #d4a72c;
+  border-radius: 8px;
+  background: #fff8c5;
+  font-size: 0.875rem;
+}
+
+.stale-banner span {
+  flex: 1;
+}

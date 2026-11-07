@@ -37,6 +37,7 @@
           <span class="status-badge" id="my-badge"></span>
           <span class="my-status__seat" id="my-seat"></span>
         </div>
+        <p class="stale-notice" id="my-stale" hidden>前日の状態のままです。今日の状態に更新してください。</p>
         <div class="my-status__actions" id="my-actions"></div>
         <form class="my-status__comment" id="comment-form" novalidate>
           <label class="field">
@@ -59,7 +60,9 @@
         <ul class="legend">
           <li><span class="legend__dot legend__dot--present"></span>在席中</li>
           <li><span class="legend__dot legend__dot--away"></span>離席中</li>
-          <li><span class="legend__dot legend__dot--remote"></span>リモート（上の一覧）</li>        </ul>
+          <li><span class="legend__dot legend__dot--remote"></span>リモート（上の一覧）</li>
+          <li><span class="legend__dot legend__dot--stale"></span>薄い点線：前日から更新なし</li>
+        </ul>
         <p class="field__hint">アイコンをクリックするとプロフィールを表示します。表示は30秒ごとに自動で更新されます。</p>
       </section>
     </aside>

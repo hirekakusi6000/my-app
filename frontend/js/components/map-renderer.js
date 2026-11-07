@@ -16,6 +16,17 @@ export const FURNITURE_TYPES = {
   other: { label: "その他", width: 2, height: 2 },
 };
 
+/** 「前日から更新なし」の説明（最終更新の日時つき） */
+export function staleLabel(updatedAt) {
+  const when = new Date(updatedAt).toLocaleString("ja-JP", {
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return `前日から更新なし（最終更新 ${when}）`;
+}
+
 export const STATUS_LABELS = {
   present: "在席中",
   away: "離席中",
@@ -167,7 +178,7 @@ export function drawOccupants(layer, seats, occupants, onClick) {
     const r = CELL * 0.62;
 
     const g = svgEl("g", {
-      class: `occupant occupant--${o.status}`,
+      class: `occupant occupant--${o.status}${o.is_stale ? " occupant--stale" : ""}`,
       tabindex: 0,
       role: "button",
       "aria-label": `${o.name ?? "名前未登録"}（${STATUS_LABELS[o.status] ?? o.status}）`,
@@ -175,6 +186,8 @@ export function drawOccupants(layer, seats, occupants, onClick) {
     g.dataset.seatId = o.seat_id;
     const title = svgEl("title");
     title.textContent = `${o.name ?? ""}（${STATUS_LABELS[o.status] ?? o.status}）`;
+    if (o.is_stale) title.textContent += `
+${staleLabel(o.updated_at)}`;
     g.append(title);
 
     g.append(svgEl("circle", { cx, cy, r: r + 3, class: "occupant__ring" }));

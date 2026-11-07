@@ -12,7 +12,7 @@ import sqlite3
 from typing import Final
 
 from app.core.errors import BusinessRuleError, ConflictError, NotFoundError
-from app.core.time import to_iso, utc_now
+from app.core.time import start_of_today_jst, to_iso, utc_now
 from app.entities.presence import PresenceEntry, PresenceStatus
 from app.entities.user import User
 from app.repositories.furniture_repository import FurnitureRepository
@@ -80,6 +80,13 @@ class PresenceService:
                 "この座席は他の人が使用中です。別の座席を選んでください", code="SEAT_OCCUPIED"
             ) from exc
         return self.get_mine(user)
+
+    def reset_stale(self, master: User) -> int:
+        """日本時間の今日になってから更新していない出勤中の人を、まとめて「未出勤」に戻す。"""
+        with self.conn:
+            return self.presence.reset_stale(
+                master.organization_id, before=start_of_today_jst(), now=to_iso(utc_now())
+            )
 
     def release_seat(self, master: User, seat_id: int) -> None:
         """マスターが座席を強制的に空ける（座っていた人は未出勤に戻る）。"""

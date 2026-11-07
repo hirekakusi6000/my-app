@@ -1,7 +1,7 @@
 import { masterDataApi } from "../api/master-data.js";
 import { peopleApi } from "../api/people.js";
 import { renderHeader } from "../components/app-header.js";
-import { STATUS_LABELS } from "../components/map-renderer.js";
+import { STATUS_LABELS, staleLabel } from "../components/map-renderer.js";
 import { openProfilePopup } from "../components/profile-popup.js";
 import { requireAuth } from "../lib/auth-guard.js";
 import { showToast } from "../lib/toast.js";
@@ -146,6 +146,11 @@ function render(people, query) {
 
     const statusRow = el("div", "person-card__status");
     statusRow.append(el("span", `status-badge status-badge--${p.status}`, STATUS_LABELS[p.status]));
+    if (p.is_stale) {
+      const tag = el("span", "stale-tag", "前日から");
+      tag.title = staleLabel(p.updated_at);
+      statusRow.append(tag);
+    }
     if (p.seat) {
       const seatText = `${p.seat.floor_name} / ${p.seat.room_name}${p.seat.label ? ` / ${p.seat.label}` : ""}`;
       const link = el("a", "person-card__seat", `${seatText}（マップで見る）`);

@@ -95,6 +95,7 @@ class SeatOccupant:
     name: str | None
     status: str
     avatar_path: str | None
+    updated_at: str
 
 
 @dataclass(frozen=True)

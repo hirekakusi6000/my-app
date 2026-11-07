@@ -237,13 +237,16 @@ def test_deleting_room_or_floor_releases_user(client, settings, seated, target):
 
 def test_occupancy_lists_seated_users(client, seated):
     res = seated["general"].get(f"{API}/rooms/{seated['room']['id']}/occupancy")
-    assert res.json() == [
+    occupants = res.json()
+    assert occupants[0].pop("updated_at")  # 更新日時（値はテストの実行時刻による）
+    assert occupants == [
         {
             "seat_id": seated["seat"]["id"],
             "user_id": seated["user_id"],
             "name": "山田 太郎",
             "status": "present",
             "avatar_url": None,
+            "is_stale": False,
         }
     ]
     # マスターも見られる
