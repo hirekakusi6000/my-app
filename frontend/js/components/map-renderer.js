@@ -172,6 +172,7 @@ export function drawOccupants(layer, seats, occupants, onClick) {
       role: "button",
       "aria-label": `${o.name ?? "名前未登録"}（${STATUS_LABELS[o.status] ?? o.status}）`,
     });
+    g.dataset.seatId = o.seat_id;
     const title = svgEl("title");
     title.textContent = `${o.name ?? ""}（${STATUS_LABELS[o.status] ?? o.status}）`;
     g.append(title);

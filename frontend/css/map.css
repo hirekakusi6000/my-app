@@ -484,3 +484,19 @@ kbd {
   font-size: 0.8125rem;
   color: var(--color-muted);
 }
+
+/* メンバー画面の「マップで見る」から開いたときの強調表示 */
+.occupant--focus .occupant__ring {
+  stroke: var(--color-primary);
+  stroke-width: 6;
+  animation: occupant-pulse 0.8s ease-in-out 5 alternate;
+}
+
+@keyframes occupant-pulse {
+  from {
+    stroke-opacity: 1;
+  }
+  to {
+    stroke-opacity: 0.3;
+  }
+}
