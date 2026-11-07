@@ -500,3 +500,12 @@ kbd {
     stroke-opacity: 0.3;
   }
 }
+
+/* マップ編集の範囲選択 */
+.marquee {
+  fill: rgb(37 99 235 / 0.08);
+  stroke: var(--color-primary);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  pointer-events: none;
+}
