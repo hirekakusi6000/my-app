@@ -7,6 +7,7 @@ from app.api.v1.endpoints import (
     me,
     offices,
     organization,
+    people,
     presence,
     profiles,
     users,
@@ -22,3 +23,4 @@ api_router.include_router(profiles.router)
 api_router.include_router(offices.router)
 api_router.include_router(presence.router)
 api_router.include_router(organization.router)
+api_router.include_router(people.router)

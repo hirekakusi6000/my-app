@@ -387,11 +387,28 @@ if (rooms.length === 0) {
   } catch {
     // 無視
   }
-  // 出社中なら自分の座席がある部屋を、そうでなければ前回の部屋を開く
+  // 開く部屋の優先順：URL で指定された部屋（メンバー画面の「マップで見る」）→
+  // 出社中なら自分の座席がある部屋 → 前回の部屋
+  const params = new URLSearchParams(window.location.search);
+  const requested = Number(params.get("room"));
   const mine = myPresence?.seat?.room_id;
-  const initial = [mine, saved].find((id) => rooms.some((r) => r.id === id)) ?? rooms[0].id;
+  const initial =
+    [requested, mine, saved].find((id) => rooms.some((r) => r.id === id)) ?? rooms[0].id;
   await showRoom(initial);
   await refreshAll();
+  if (requested === initial && params.get("seat")) focusSeat(Number(params.get("seat")));
+}
+
+/** 指定した座席に座っている人を目立たせ、画面内に表示する */
+function focusSeat(seatId) {
+  const icon = current?.svgParts.overlayLayer.querySelector(`[data-seat-id="${seatId}"]`);
+  if (!icon) {
+    showToast("その座席には今は誰も座っていません", "error");
+    return;
+  }
+  icon.classList.add("occupant--focus");
+  icon.scrollIntoView({ block: "center", inline: "center", behavior: "smooth" });
+  setTimeout(() => icon.classList.remove("occupant--focus"), 4000);
 }
 
 pollTimer = setInterval(() => {

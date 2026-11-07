@@ -797,3 +797,131 @@ a {
   font-size: 0.875rem;
   color: var(--color-text);
 }
+
+/* ───────── メンバー検索 ───────── */
+.search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) 140px;
+  gap: 16px 20px;
+  align-items: start;
+}
+
+.status-filter {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.status-filter legend {
+  float: left;
+  margin-right: 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.chips:empty {
+  display: none;
+}
+
+.chip--matched {
+  border-color: var(--color-primary);
+  background: #ddf4ff;
+  font-weight: 600;
+}
+
+.chip--removable {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-color: var(--color-primary);
+  background: #ddf4ff;
+}
+
+.chip--removable button {
+  padding: 0 2px;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.result-count {
+  margin: 16px 0 8px;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.people-grid .empty-state {
+  grid-column: 1 / -1;
+}
+
+.person-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.person-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.person-card__head:hover strong {
+  text-decoration: underline;
+}
+
+.person-card__who {
+  display: grid;
+}
+
+.person-card__meta {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.person-card__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.person-card__comment {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #424a53;
+}
+
+.avatar--md {
+  width: 44px;
+  height: 44px;
+  font-size: 0.9rem;
+}
