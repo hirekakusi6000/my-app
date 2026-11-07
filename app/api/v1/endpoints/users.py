@@ -1,18 +1,21 @@
 import sqlite3
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, File, Query, UploadFile, status
 
 from app.api.deps import get_avatar_storage, require_master
 from app.db.connection import get_db
 from app.entities.user import Role, User, UserSummary
 from app.schemas.users import (
     CreateUserRequest,
+    ImportResponse,
+    ImportRowResponse,
     ResetPasswordRequest,
     UpdateUserRequest,
     UserListResponse,
     UserResponse,
 )
 from app.services.avatar_storage import AvatarStorage
+from app.services.user_csv import MAX_CSV_BYTES, parse_user_csv
 from app.services.user_service import MAX_GENERAL_USERS, UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -103,3 +106,30 @@ def delete_user(
     service: UserService = Depends(get_user_service),
 ) -> None:
     service.delete_user(master, user_id)
+
+
+@router.post("/import", response_model=ImportResponse)
+def import_users(
+    file: UploadFile = File(...),
+    dry_run: bool = Query(False, description="true なら内容の確認だけ行い、作成しない"),
+    master: User = Depends(require_master),
+    service: UserService = Depends(get_user_service),
+) -> ImportResponse:
+    """CSV で一般ユーザーをまとめて作成する。1行でもエラーがあれば1人も作成しない。"""
+    data = file.file.read(MAX_CSV_BYTES + 1)
+    rows = parse_user_csv(data)
+    result = service.import_users(master, rows, dry_run=dry_run)
+    return ImportResponse(
+        created=result.created,
+        error=result.error,
+        rows=[
+            ImportRowResponse(
+                line=r.line,
+                email=r.email,
+                initial_password=r.initial_password if result.created else None,
+                password_provided=source.initial_password is not None,
+                error=r.error,
+            )
+            for r, source in zip(result.rows, rows, strict=True)
+        ],
+    )

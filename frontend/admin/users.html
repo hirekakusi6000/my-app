@@ -15,7 +15,10 @@
         <h1 class="page__title">ユーザー管理</h1>
         <p class="page__lead">従業員のアカウントを作成・管理します。<span id="user-count"></span></p>
       </div>
-      <button type="button" class="button" id="open-create">＋ ユーザーを作成</button>
+      <div class="page__head-actions">
+        <button type="button" class="button button--ghost" id="open-import">CSV で一括登録</button>
+        <button type="button" class="button" id="open-create">＋ ユーザーを作成</button>
+      </div>
     </div>
 
     <div id="sample-banner" hidden></div>
@@ -128,6 +131,39 @@
       <div class="dialog__actions">
         <button type="button" class="button button--ghost" data-copy>コピー</button>
         <button type="button" class="button" data-close>閉じる</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- CSV で一括登録 -->
+  <dialog class="dialog dialog--wide" id="import-dialog">
+    <div class="form">
+      <h2 class="dialog__title">CSV で一括登録</h2>
+
+      <div data-step="select">
+        <p class="dialog__text">1行目に見出し、2行目から1人1行で書いた CSV ファイルを選んでください。初期パスワードが空欄の人には自動で作成します。</p>
+        <pre class="csv-example">メールアドレス,初期パスワード
+taro@example.com,
+hanako@example.com,hanako-pass-1</pre>
+        <p class="field__hint">Excel で保存した CSV（Shift_JIS）も読み込めます。一度に50人まで。<a href="#" data-template>ひな形をダウンロード</a></p>
+        <input type="file" accept=".csv,text/csv" data-file>
+      </div>
+
+      <div data-step="preview" hidden>
+        <p class="dialog__text" data-summary></p>
+        <div class="alert alert--error" data-file-error hidden></div>
+        <div class="table-wrap table-wrap--scroll">
+          <table class="table">
+            <thead><tr><th>行</th><th>メールアドレス</th><th>初期パスワード</th><th>確認結果</th></tr></thead>
+            <tbody data-rows></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="dialog__actions">
+        <button type="button" class="button button--ghost" data-close>閉じる</button>
+        <button type="button" class="button button--ghost" data-download hidden>結果を CSV で保存</button>
+        <button type="button" class="button" data-import hidden disabled>登録する</button>
       </div>
     </div>
   </dialog>

@@ -5,6 +5,7 @@ import { clearErrors, handleSubmit } from "../lib/form.js";
 import { generatePassword } from "../lib/password.js";
 import { showToast } from "../lib/toast.js";
 import { renderSampleDataBanner } from "../components/sample-data-banner.js";
+import { setupCsvImportDialog } from "../components/csv-import-dialog.js";
 
 const me = await requireAuth({ role: "master" });
 renderHeader(document.getElementById("app-header"), me);
@@ -185,3 +186,9 @@ await reload();
 
 // 何もない組織には、お試し用のサンプルデータを案内する
 renderSampleDataBanner(document.getElementById("sample-banner"), { onCreated: reload });
+
+// CSV で一括登録
+const importDialog = setupCsvImportDialog(document.getElementById("import-dialog"), {
+  onImported: reload,
+});
+document.getElementById("open-import").addEventListener("click", () => importDialog.open());
