@@ -3,12 +3,22 @@
 Uvicorn を1プロセスで動かす前提。複数プロセスにする場合は、DB などの共有の保存先が必要になる。
 """
 
+import logging
 import threading
 import time
 from collections import deque
 from collections.abc import Callable
 
 from app.core.errors import RateLimitedError
+
+logger = logging.getLogger("app.audit")
+
+
+def _limited(key: str) -> RateLimitedError:
+    # キーは「種類:IP:メールアドレス」。メールアドレスはログに出さない
+    kind, _, rest = key.partition(":")
+    logger.warning("試行回数の制限に達しました kind=%s ip=%s", kind, rest.split(":")[0])
+    return RateLimitedError()
 
 
 class RateLimiter:
@@ -32,7 +42,7 @@ class RateLimiter:
         """制限を超えていれば RateLimitedError を投げる（回数は数えない）。"""
         with self._lock:
             if len(self._recent(key, window_seconds)) >= limit:
-                raise RateLimitedError()
+                raise _limited(key)
 
     def record(self, key: str) -> None:
         with self._lock:
@@ -42,5 +52,5 @@ class RateLimiter:
         """制限を確認してから1回数える。"""
         with self._lock:
             if len(self._recent(key, window_seconds)) >= limit:
-                raise RateLimitedError()
+                raise _limited(key)
             self._hits.setdefault(key, deque()).append(self._clock())

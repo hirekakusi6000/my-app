@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, Request, Response, status
 
 from app.api.deps import (
@@ -9,9 +11,12 @@ from app.api.deps import (
 from app.api.v1.presenters import to_me_response
 from app.core.config import Settings
 from app.core.errors import UnauthenticatedError
+from app.core.log_config import mask_email
 from app.core.rate_limit import RateLimiter
 from app.schemas.auth import LoginRequest, MeResponse, SignupRequest
 from app.services.auth_service import AuthService
+
+audit = logging.getLogger("app.audit")
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -48,6 +53,11 @@ def signup(
     result = service.signup(
         organization_name=body.organization_name, email=body.email, password=body.password
     )
+    audit.info(
+        "組織を作成しました organization_id=%s email=%s",
+        result.user.organization_id,
+        mask_email(result.user.email),
+    )
     _set_session_cookie(response, result.token, settings)
     return to_me_response(service.get_account(result.user))
 
@@ -68,7 +78,9 @@ def login(
         result = service.login(email=body.email, password=body.password)
     except UnauthenticatedError:
         limiter.record(key)
+        audit.warning("ログインに失敗しました email=%s", mask_email(body.email))
         raise
+    audit.info("ログインしました user_id=%s", result.user.id)
     _set_session_cookie(response, result.token, settings)
     return to_me_response(service.get_account(result.user))
 

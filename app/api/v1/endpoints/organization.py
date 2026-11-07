@@ -1,5 +1,6 @@
 """自分の組織の設定（マスターのみ）。"""
 
+import logging
 import sqlite3
 
 from fastapi import APIRouter, Depends, Response, status
@@ -16,6 +17,8 @@ from app.schemas.organization import (
 from app.services.avatar_storage import AvatarStorage
 from app.services.organization_service import OrganizationService
 from app.services.sample_data_service import SampleDataService
+
+audit = logging.getLogger("app.audit")
 
 router = APIRouter(prefix="/organization", tags=["organization"])
 
@@ -56,6 +59,9 @@ def delete_organization(
     service: OrganizationService = Depends(get_service),
 ) -> None:
     service.delete(master, password=body.password, confirm_name=body.confirm_name)
+    audit.warning(
+        "組織を削除しました organization_id=%s user_id=%s", master.organization_id, master.id
+    )
     # 組織と一緒にセッションも消えているので、ブラウザの Cookie も消しておく
     response.delete_cookie(SESSION_COOKIE, path="/")
 

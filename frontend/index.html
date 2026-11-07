@@ -7,12 +7,6 @@
   <link rel="stylesheet" href="/css/base.css">
 </head>
 <body>
-  <script type="module">
-    // トップページは、ログイン状態に応じて適切な画面へ振り分けるだけ
-    import { homePathFor, loadMe, PATHS } from "/js/lib/auth-guard.js";
-
-    const me = await loadMe();
-    window.location.replace(me ? homePathFor(me) : PATHS.login);
-  </script>
+  <script type="module" src="/js/pages/index.js"></script>
 </body>
 </html>
