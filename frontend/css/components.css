@@ -776,3 +776,24 @@ a {
 .panel--danger .dialog__text {
   margin-bottom: 16px;
 }
+
+/* ───────── サンプルデータの案内 ───────── */
+.sample-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  border: 1px solid #54aeff;
+  border-radius: 8px;
+  background: #ddf4ff;
+  text-align: left;
+}
+
+.sample-banner__text {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  font-size: 0.875rem;
+  color: var(--color-text);
+}

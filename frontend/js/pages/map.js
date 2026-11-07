@@ -10,6 +10,7 @@ import {
   STATUS_LABELS,
 } from "../components/map-renderer.js";
 import { openProfilePopup } from "../components/profile-popup.js";
+import { renderSampleDataBanner } from "../components/sample-data-banner.js";
 import { requireAuth } from "../lib/auth-guard.js";
 import { showToast } from "../lib/toast.js";
 
@@ -366,6 +367,11 @@ if (rooms.length === 0) {
     link.href = "/admin/offices.html";
     link.textContent = "フロア・部屋を作成する";
     empty.append(link);
+    // サンプルデータを作成できる場合は、そのボタンも出す
+    const banner = document.createElement("div");
+    banner.hidden = true;
+    empty.append(banner);
+    renderSampleDataBanner(banner, { onCreated: () => window.location.reload() });
   } else {
     const hint = document.createElement("p");
     hint.className = "field__hint";

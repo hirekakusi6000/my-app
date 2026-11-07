@@ -4,6 +4,7 @@ import { requireAuth } from "../lib/auth-guard.js";
 import { clearErrors, handleSubmit } from "../lib/form.js";
 import { generatePassword } from "../lib/password.js";
 import { showToast } from "../lib/toast.js";
+import { renderSampleDataBanner } from "../components/sample-data-banner.js";
 
 const me = await requireAuth({ role: "master" });
 renderHeader(document.getElementById("app-header"), me);
@@ -181,3 +182,6 @@ handleSubmit(document.getElementById("delete-form"), async () => {
 });
 
 await reload();
+
+// 何もない組織には、お試し用のサンプルデータを案内する
+renderSampleDataBanner(document.getElementById("sample-banner"), { onCreated: reload });
