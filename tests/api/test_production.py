@@ -56,18 +56,6 @@ def test_api_docs_have_no_csp_and_can_be_disabled(client, tmp_path):
         assert c.get("/openapi.json").status_code == 404
 
 
-def test_pages_have_no_inline_scripts(settings):
-    """CSP でインラインスクリプトを禁止しているので、HTML に直接スクリプトを書いていないこと。"""
-    web_pages = [
-        p for p in (settings.web_dist_dir.parent).rglob("*.html") if "node_modules" not in p.parts
-    ]
-    for html in [*settings.frontend_dir.rglob("*.html"), *web_pages]:
-        text = html.read_text(encoding="utf-8")
-        for tag in text.split("<script")[1:]:
-            assert "src=" in tag.split(">")[0], f"{html.name} にインラインスクリプトがあります"
-        assert ' style="' not in text, f"{html.name} に style 属性があります"
-
-
 # ───────── リクエストID ─────────
 
 
@@ -99,10 +87,7 @@ def test_unexpected_error_returns_json_with_request_id(tmp_path):
     def explode() -> None:
         raise RuntimeError("内部の詳細")
 
-    frontend = next(r for r in app.router.routes if getattr(r, "name", None) == "frontend")
-    app.router.routes.remove(frontend)
     app.include_router(boom)
-    app.router.routes.append(frontend)
 
     with TestClient(app, raise_server_exceptions=False) as c:
         res = c.get("/api/test/boom")

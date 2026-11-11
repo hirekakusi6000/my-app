@@ -15,20 +15,6 @@ updates:
       dev-tools:
         patterns: ["pytest*", "ruff", "httpx"]
 
-  - package-ecosystem: npm
-    directory: "/web"
-    target-branch: develop
-    schedule:
-      interval: weekly
-      day: monday
-      time: "09:00"
-      timezone: Asia/Tokyo
-    open-pull-requests-limit: 5
-    groups:
-      # Vue と Vite まわりはまとめて1つのプルリクエストにする
-      vue-vite:
-        patterns: ["vue", "vue-tsc", "vite", "@vitejs/*"]
-
   - package-ecosystem: github-actions
     directory: "/"
     target-branch: develop

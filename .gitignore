@@ -26,10 +26,3 @@ data/
 .idea/
 Thumbs.db
 .DS_Store
-
-# 逕ｻ髱｢縺ｮ閾ｪ蜍輔ユ繧ｹ繝医�ｮ螟ｱ謨玲凾縺ｮ險倬鹸
-test-results/
-
-# Vue の画面（web/）のライブラリとビルド結果
-web/node_modules/
-web/dist/
