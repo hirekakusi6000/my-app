@@ -5,10 +5,12 @@
 [ブラウザ (PC)]  Vue 3 + TypeScript（移行前の画面は HTML / CSS / JS）、マップは SVG で描画
    │  fetch (JSON) ＋ セッション Cookie、30秒ごとのポーリング
    ▼
+[リバースプロキシ（Caddy など）]  ※開発時は Vite の開発サーバーが同じ役割
+ ├─ /               → 画面ファイル（画面のリポジトリでビルドした dist/）
+ └─ /api/...        ↓
 [Uvicorn]
    ▼
 [FastAPI]
- ├─ /               → 画面ファイル (web/dist → frontend/ の順に探す)
  ├─ /api/v1/...     → Router     … HTTP の処理、入力チェック (Pydantic)
  │                      │  Depends: ログイン中ユーザー / 権限 / 初回設定済みか
  │                      ▼
@@ -19,7 +21,7 @@
  └───────────────── SQLite (data/app.db)  ＋  data/uploads/ (プロフィール画像)
 ```
 
-画面は Vite でビルドした静的ファイルとして FastAPI が配信する（Vite の開発サーバーは使わない。CSP と同じオリジンの Cookie をそのまま使うため）。Vue に移行した画面は `web/dist` に、移行前の画面は `frontend/` にあり、同じ URL のときは `web/dist` を優先する。
+画面と API は別のリポジトリ（画面：`my-app-web`、API：このリポジトリ）。どちらも同じオリジン（同じドメイン・ポート）で公開し、`/api` だけを FastAPI に振り分ける。ログインの Cookie（`SameSite=Lax`）と CSP をそのまま使え、CORS の設定も要らない。
 
 依存の向きは `api → services → repositories → db` の一方向だけ。上の層は下の層だけを呼び出す。
 

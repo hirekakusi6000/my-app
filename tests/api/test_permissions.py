@@ -25,11 +25,7 @@ def client(settings):
     def general_only() -> dict:
         return {"ok": True}
 
-    # 画面ファイルの配信（"/" へのマウント）は全パスに一致するので、常に最後に照合させる
-    frontend = next(r for r in app.router.routes if getattr(r, "name", None) == "frontend")
-    app.router.routes.remove(frontend)
     app.include_router(probe)
-    app.router.routes.append(frontend)
     with TestClient(app) as c:
         yield c
 
