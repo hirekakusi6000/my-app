@@ -8,7 +8,7 @@
 | 項目 | 採用 |
 |---|---|
 | バックエンド | Python / FastAPI |
-| フロントエンド | HTML / CSS / JavaScript（フレームワーク不使用） |
+| フロントエンド | Vue 3 + Vite + TypeScript（当初は HTML / CSS / JavaScript で作成し、画面ごとに順番に移行する） |
 | DB | SQLite（標準ライブラリ `sqlite3`、**生SQL**） |
 | ASGI サーバー | Uvicorn |
 | パッケージ管理 | pip |
