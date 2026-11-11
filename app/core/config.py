@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     backup_keep: int = 14  # 残しておくバックアップの数（古いものから削除）
     migrations_dir: Path = BASE_DIR / "migrations"
     frontend_dir: Path = BASE_DIR / "frontend"
+    # Vue に移行した画面のビルド結果（cd web && npm run build で作られる）。
+    # 同じ URL のファイルがあれば frontend_dir より優先して配信する
+    web_dist_dir: Path = BASE_DIR / "web" / "dist"
 
     # ───────── セッション・セキュリティ ─────────
     session_expire_hours: int = 24 * 7

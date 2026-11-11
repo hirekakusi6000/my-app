@@ -32,6 +32,7 @@
 
 ```bash
 pip install -r requirements.txt
+(cd web && npm ci && npm run build)   # Vue の画面のビルド（Node.js 22.12 以上。サーバーで実行せず、ビルド済みの web/dist を置いてもよい）
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 \
   --proxy-headers --forwarded-allow-ips 127.0.0.1 --no-access-log
 ```
@@ -139,6 +140,7 @@ Windows ではタスクスケジューラに `.venv\Scripts\python.exe -m app.db
 - [ ] HTTPS で開け、`http://` は `https://` に転送される
 - [ ] `--proxy-headers --forwarded-allow-ips` を設定し、ログの IP が利用者の IP になっている
 - [ ] `--workers 1` で起動している
+- [ ] `web/dist` がある（起動時に「Vue の画面のビルド結果がありません」と警告が出ていない）
 - [ ] `data/` が永続ディスク上にあり、再起動しても消えない
 - [ ] バックアップが毎日作られ、別の場所にも複製されている。復元を一度試した
 - [ ] ログがファイルに出ており、ディスクを圧迫していない
