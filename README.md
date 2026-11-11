@@ -2,7 +2,7 @@
 
 オフィスの座席配置、出勤・在席状況、プロフィール、技術スキルを一元管理する Web アプリケーション。
 
-設計書は [docs/](docs/) にあります（要件・アーキテクチャ・ディレクトリ・DB・API・画面）。
+設計書は [docs/](docs/) にあります（要件・アーキテクチャ・ディレクトリ・DB・API・画面・公開手順・使用技術）。
 公開する手順は [docs/07-deployment.md](docs/07-deployment.md) を参照してください。
 
 ## 技術構成
@@ -12,6 +12,9 @@
 - データベース: SQLite（標準ライブラリ `sqlite3`、生SQL）
 - ASGIサーバー: Uvicorn
 - パッケージ管理: pip
+- テスト: pytest / Playwright、CI: GitHub Actions
+
+使用している技術の一覧（バージョン・用途）は [docs/08-tech-stack.md](docs/08-tech-stack.md) を参照してください。
 
 ## ローカル開発環境の構築（Windows / PowerShell）
 
