@@ -8,6 +8,9 @@ requires-python = ">=3.12"
 pythonpath = ["."]
 testpaths = ["tests"]
 addopts = "-ra"
+markers = [
+  "e2e: ブラウザを使った画面の自動テスト（Chromium が必要。`pytest -m \"not e2e\"` で除外できる）",
+]
 
 [tool.ruff]
 line-length = 100
