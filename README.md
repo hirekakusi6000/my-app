@@ -3,7 +3,7 @@
 オフィスの座席配置・在席状況・プロフィール・スキルを管理する Web アプリの **API**（Python / FastAPI / SQLite）です。
 
 **README と設計書は、ドキュメントのリポジトリ `my-app-docs` にまとめています。**
-開発環境の構築・コマンド・設計書は `my-app-docs` の `api/README.md` と `design/` を参照してください。
+開発環境の構築・コマンドは `my-app-docs` の `README.md`、設計書は `design/` を参照してください。
 
 | リポジトリ | 内容 |
 |---|---|
