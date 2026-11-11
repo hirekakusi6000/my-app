@@ -1,0 +1,23 @@
+# 依存ライブラリと GitHub Actions の更新を、develop ブランチ向けのプルリクエストで知らせる。
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: "/"
+    target-branch: develop
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Tokyo
+    open-pull-requests-limit: 5
+    groups:
+      # 開発用のツールはまとめて1つのプルリクエストにする
+      dev-tools:
+        patterns: ["pytest*", "ruff", "httpx"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    target-branch: develop
+    schedule:
+      interval: monthly
+      timezone: Asia/Tokyo

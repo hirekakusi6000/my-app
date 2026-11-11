@@ -44,6 +44,16 @@ python -m app.db.migrate               # マイグレーションを手動で実
 python -m app.db.backup                # DB とプロフィール画像のバックアップ
 ```
 
+## CI（GitHub Actions）
+
+GitHub に push すると、[.github/workflows/ci.yml](.github/workflows/ci.yml) が次を自動で実行します（`master` / `develop` / `feature/**` への push と、プルリクエスト）。
+
+- lint と整形のチェック（ruff）
+- テスト（Python 3.12 と 3.14）。カバレッジが 90% 未満なら失敗
+- 画面の JavaScript の文法チェック（`tests/unit/test_frontend_syntax.py`。ローカルでも Node.js があれば実行される）
+
+ライブラリと GitHub Actions の更新は、Dependabot が `develop` 向けのプルリクエストで知らせます（[.github/dependabot.yml](.github/dependabot.yml)）。
+
 ## ブランチ運用
 
 - `master`: リリース用
