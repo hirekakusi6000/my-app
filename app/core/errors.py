@@ -4,10 +4,16 @@ service 層は HTTP を知らずに AppError のサブクラスを投げ、
 ここで登録する例外ハンドラーが {"detail": ..., "code": ...} の形に変換する。
 """
 
+import logging
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
+
+from app.core.middleware import request_id_var
+
+error_logger = logging.getLogger("app.error")
 
 
 class AppError(Exception):
@@ -88,7 +94,23 @@ async def _handle_http_error(_: Request, exc: StarletteHTTPException) -> JSONRes
     )
 
 
+async def _handle_unexpected_error(_: Request, exc: Exception) -> JSONResponse:
+    """予期しないエラー。詳細はログにだけ残し、利用者には問い合わせ用の ID だけを返す。"""
+    request_id = request_id_var.get()
+    error_logger.exception("予期しないエラーが発生しました", exc_info=exc)
+    return JSONResponse(
+        status_code=500,
+        content=_error_body(
+            "サーバーでエラーが発生しました。時間をおいて再度お試しください",
+            "INTERNAL_ERROR",
+            request_id=request_id,
+        ),
+        headers={"X-Request-ID": request_id},
+    )
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     app.add_exception_handler(AppError, _handle_app_error)
     app.add_exception_handler(RequestValidationError, _handle_validation_error)
     app.add_exception_handler(StarletteHTTPException, _handle_http_error)
+    app.add_exception_handler(Exception, _handle_unexpected_error)

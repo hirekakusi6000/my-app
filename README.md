@@ -3,6 +3,7 @@
 オフィスの座席配置、出勤・在席状況、プロフィール、技術スキルを一元管理する Web アプリケーション。
 
 設計書は [docs/](docs/) にあります（要件・アーキテクチャ・ディレクトリ・DB・API・画面）。
+公開する手順は [docs/07-deployment.md](docs/07-deployment.md) を参照してください。
 
 ## 技術構成
 
@@ -40,6 +41,7 @@ pytest                                 # テスト
 pytest --cov=app                       # カバレッジ付きテスト
 ruff check . ; ruff format .           # lint と整形
 python -m app.db.migrate               # マイグレーションを手動で実行
+python -m app.db.backup                # DB とプロフィール画像のバックアップ
 ```
 
 ## ブランチ運用

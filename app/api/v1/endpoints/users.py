@@ -1,3 +1,4 @@
+import logging
 import sqlite3
 
 from fastapi import APIRouter, Depends, File, Query, UploadFile, status
@@ -17,6 +18,8 @@ from app.schemas.users import (
 from app.services.avatar_storage import AvatarStorage
 from app.services.user_csv import MAX_CSV_BYTES, parse_user_csv
 from app.services.user_service import MAX_GENERAL_USERS, UserService
+
+audit = logging.getLogger("app.audit")
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -106,6 +109,7 @@ def delete_user(
     service: UserService = Depends(get_user_service),
 ) -> None:
     service.delete_user(master, user_id)
+    audit.info("ユーザーを削除しました user_id=%s by=%s", user_id, master.id)
 
 
 @router.post("/import", response_model=ImportResponse)
