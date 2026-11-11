@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parents[2]
 class Settings(BaseSettings):
     """アプリ全体の設定。環境変数（接頭辞 APP_）または .env から読み込む。
 
-    公開するときに変える項目は docs/07-deployment.md を参照。
+    公開するときに変える項目は my-app-docs の design/07-deployment.md を参照。
     """
 
     model_config = SettingsConfigDict(env_file=".env", env_prefix="APP_", extra="ignore")
