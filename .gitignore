@@ -26,3 +26,6 @@ data/
 .idea/
 Thumbs.db
 .DS_Store
+
+# 画面の自動テストの失敗時の記録
+test-results/

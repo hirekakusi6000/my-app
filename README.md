@@ -22,6 +22,7 @@ py -3.14 -m venv .venv
 
 # 2. 依存ライブラリのインストール
 pip install -r requirements-dev.txt
+python -m playwright install chromium  # 画面の自動テスト用のブラウザ（初回のみ）
 
 # 3. 設定ファイル（任意。なければ既定値で動きます）
 Copy-Item .env.example .env
@@ -37,7 +38,9 @@ uvicorn app.main:app --reload --reload-dir app
 ## よく使うコマンド
 
 ```powershell
-pytest                                 # テスト
+pytest                                 # テスト（画面の自動テストを含む）
+pytest -m "not e2e"                    # 画面の自動テストを除く（速い）
+pytest -m e2e --headed                 # 画面の自動テストを、ブラウザを表示しながら実行
 pytest --cov=app                       # カバレッジ付きテスト
 ruff check . ; ruff format .           # lint と整形
 python -m app.db.migrate               # マイグレーションを手動で実行
@@ -51,6 +54,7 @@ GitHub に push すると、[.github/workflows/ci.yml](.github/workflows/ci.yml)
 - lint と整形のチェック（ruff）
 - テスト（Python 3.12 と 3.14）。カバレッジが 90% 未満なら失敗
 - 画面の JavaScript の文法チェック（`tests/unit/test_frontend_syntax.py`。ローカルでも Node.js があれば実行される）
+- 画面の自動テスト（`tests/e2e`。Playwright の Chromium で主な操作の流れを確認。失敗時はスクリーンショットと操作の記録を保存）
 
 ライブラリと GitHub Actions の更新は、Dependabot が `develop` 向けのプルリクエストで知らせます（[.github/dependabot.yml](.github/dependabot.yml)）。
 
