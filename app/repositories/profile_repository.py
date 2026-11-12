@@ -1,3 +1,9 @@
+# UserSkillRepository には list というメソッドがあるため、クラスの中の型注釈の
+# list[...] が組み込みの list ではなくそのメソッドを指してしまい、
+# Python 3.12・3.13 では読み込み時にエラーになる。
+# 型注釈を実行時に評価しないようにして、3.12 以上のどの版でも動くようにする。
+from __future__ import annotations
+
 import sqlite3
 
 from app.entities.profile import Profile, UserSkill
